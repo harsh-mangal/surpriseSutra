@@ -4,6 +4,11 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/Home";
 import Footer from "./components/Footer";
 import AboutUs from "./pages/About";
+import ThemedPartySupplies from "./services/ThemedParty";
+import CustomizedPartySupplies from "./services/Customized";
+import Gifts from "./pages/Gifts";
+import ContactUs from "./pages/ContactUs";
+import ProductList from "./pages/Products";
 
 
 function Layout() {
@@ -15,6 +20,12 @@ function Layout() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/gifts" element={<Gifts />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/products" element={<ProductList />} />
+
+            <Route path="/party-supplies/themed" element={<ThemedPartySupplies />} />
+             <Route path="/party-supplies/customized" element={<CustomizedPartySupplies />} />
           </Routes>
         </main>
         <Footer />
