@@ -42,7 +42,7 @@ const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative bg-gradient-to-br from-rose-50 via-amber-50 to-pink-50 py-12 md:py-24 overflow-hidden"
+      className="relative bg-white py-12 md:py-24 overflow-hidden"
     >
       {/* Luxury gradient overlays */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,215,0,0.1),transparent_50%)]"></div>

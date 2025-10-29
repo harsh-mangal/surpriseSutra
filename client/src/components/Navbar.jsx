@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Sparkles } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, Sparkles } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,43 +11,43 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Handle scroll effect for premium navbar
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Define all navigation links
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About Us', path: '/about-us' },
+    { name: "Home", path: "/" },
+    { name: "About Us", path: "/about-us" },
     {
-      name: 'Party Supplies',
+      name: "Party Supplies",
       subLinks: [
-        { name: 'DIY Kits', path: '/party-supplies/diy-kits' },
-        { name: 'Themed Party Supplies', path: '/party-supplies/themed' },
-        { name: 'Customized Party Supplies', path: '/party-supplies/customized' },
+        { name: "DIY Kits", path: "/party-supplies/diy-kits" },
+        { name: "Themed Party Supplies", path: "/party-supplies/themed" },
+        { name: "Customized Party Supplies", path: "/party-supplies/customized" },
       ],
     },
-    {name:'Products',path:'/products'},
-    { name: 'Gifts', path: '/gifts' },
-    { name: 'Services', path: '/services' },
-    { name: 'Contact', path: '/contact', isButton: true },
+    { name: "Products", path: "/products" },
+    { name: "Gifts", path: "/gifts" },
+    { name: "Services", path: "/services" },
+    { name: "Contact", path: "/contact", isButton: true },
   ];
 
   const linkClasses = (path, isButton = false) =>
     isButton
-      ? `group relative px-6 py-2 lg:px-8 lg:py-3 rounded-full font-semibold text-white transition-all duration-300 overflow-hidden ${location.pathname === path
-        ? 'bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-900 shadow-lg shadow-amber-500/50'
-        : 'bg-gradient-to-r from-red-600 to-rose-600 hover:shadow-xl hover:shadow-red-500/50 hover:scale-105'
-      }`
-      : `relative font-semibold text-base transition-all duration-300 group ${location.pathname === path
-        ? 'text-transparent bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text'
-        : 'text-gray-300 hover:text-white'
-      }`;
+      ? `group relative px-6 py-2 lg:px-8 lg:py-3 rounded-full font-semibold text-white transition-all duration-300 overflow-hidden ${
+          location.pathname === path
+            ? "bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-900 shadow-lg"
+            : "bg-gradient-to-r from-red-500 to-rose-500 hover:shadow-xl hover:scale-105"
+        }`
+      : `relative font-semibold text-base transition-all duration-300 group ${
+          location.pathname === path
+            ? "text-transparent bg-gradient-to-r from-amber-500 to-yellow-400 bg-clip-text"
+            : "text-gray-700 hover:text-gray-900"
+        }`;
 
   const handleLinkClick = () => {
     setIsOpen(false);
@@ -56,22 +56,23 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all duration-500 ${scrolled
-        ? 'bg-gray-900/95 backdrop-blur-md shadow-2xl'
-        : 'bg-gradient-to-r from-gray-900 via-black to-gray-900 shadow-lg'
-        }`}
+      className={`sticky top-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-white/95 backdrop-blur-md shadow-xl"
+          : "bg-gradient-to-r from-white via-gray-50 to-white shadow-md"
+      }`}
     >
       {/* Premium gradient border */}
-      <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-50"></div>
+      <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-50"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-24 lg:h-28">
-          {/* Logo with premium hover effect */}
+          {/* Logo */}
           <div
             className="flex-shrink-0 cursor-pointer group relative"
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-rose-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-rose-400/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <img
               src="https://ik.imagekit.io/sqpcbo0c0/Surprise%20Sutra/ChatGPT_Image_Oct_14__2025__05_14_06_PM-removebg-preview.png?updatedAt=1760442286996"
               alt="Surprise Sutra Logo"
@@ -85,30 +86,38 @@ const Navbar = () => {
               <div
                 key={link.path || link.name}
                 className="relative"
-                onMouseEnter={() => link.subLinks && setIsPartySuppliesOpen(true)}
-                onMouseLeave={() => link.subLinks && setIsPartySuppliesOpen(false)}
+                onMouseEnter={() =>
+                  link.subLinks && setIsPartySuppliesOpen(true)
+                }
+                onMouseLeave={() =>
+                  link.subLinks && setIsPartySuppliesOpen(false)
+                }
               >
                 {link.subLinks ? (
                   <>
-                    <div className={linkClasses('/party-supplies')}>
+                    <div className={linkClasses("/party-supplies")}>
                       <span className="flex items-center cursor-pointer">
                         {link.name}
                       </span>
                       <span
-                        className={`absolute bottom-0 left-0  w-full h-0.5 bg-gradient-to-r from-amber-400 to-yellow-400 transform origin-left transition-transform duration-300 ${location.pathname.startsWith('/party-supplies') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                          }`}
+                        className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-400 to-yellow-400 transform origin-left transition-transform duration-300 ${
+                          location.pathname.startsWith("/party-supplies")
+                            ? "scale-x-100"
+                            : "scale-x-0 group-hover:scale-x-100"
+                        }`}
                       ></span>
                     </div>
                     {isPartySuppliesOpen && (
-                      <div className="absolute top-full left-0 mt-0 w-52 bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-amber-500/20 overflow-hidden">
+                      <div className="absolute top-full left-0 mt-1 w-52 bg-white/95 backdrop-blur-md rounded-lg shadow-xl border border-amber-500/20 overflow-hidden">
                         {link.subLinks.map((subLink) => (
                           <Link
                             key={subLink.path}
                             to={subLink.path}
-                            className={`block px-4 py-3 text-sm font-medium text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors duration-200 ${location.pathname === subLink.path
-                                ? 'bg-gradient-to-r from-amber-400/20 to-yellow-400/20 text-white'
-                                : ''
-                              }`}
+                            className={`block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-amber-50 hover:text-gray-900 transition-colors duration-200 ${
+                              location.pathname === subLink.path
+                                ? "bg-gradient-to-r from-amber-100 to-yellow-100 text-gray-900"
+                                : ""
+                            }`}
                             onClick={handleLinkClick}
                           >
                             {subLink.name}
@@ -125,8 +134,11 @@ const Navbar = () => {
                     {!link.isButton && (
                       <>
                         <span
-                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-400 to-yellow-400 transform origin-left transition-transform duration-300 ${location.pathname === link.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                            }`}
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-400 to-yellow-400 transform origin-left transition-transform duration-300 ${
+                            location.pathname === link.path
+                              ? "scale-x-100"
+                              : "scale-x-0 group-hover:scale-x-100"
+                          }`}
                         ></span>
                         {link.name}
                       </>
@@ -147,7 +159,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className="relative p-2 text-gray-300 hover:text-amber-400 focus:outline-none transition-colors duration-300"
+              className="relative p-2 text-gray-700 hover:text-amber-500 focus:outline-none transition-colors duration-300"
               aria-label="Toggle menu"
             >
               <div className="relative w-8 h-8 flex items-center justify-center">
@@ -161,19 +173,24 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu with premium slide animation */}
+        {/* Mobile Menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
-            }`}
+          className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
+            isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+          }`}
         >
-          <div className="pb-6 pt-2 space-y-3 bg-gradient-to-b from-gray-900/50 to-black/50 backdrop-blur-sm rounded-2xl px-4 mt-2">
+          <div className="pb-6 pt-2 space-y-3 bg-white/90 backdrop-blur-sm rounded-2xl px-4 mt-2 shadow-lg">
             {navLinks.map((link, index) => (
               <div key={link.path || link.name}>
                 {link.subLinks ? (
                   <>
                     <button
-                      onClick={() => setIsPartySuppliesOpen(!isPartySuppliesOpen)}
-                      className={`w-full text-left block ${linkClasses('/party-supplies')} py-3 px-4 rounded-lg hover:bg-gray-800/50`}
+                      onClick={() =>
+                        setIsPartySuppliesOpen(!isPartySuppliesOpen)
+                      }
+                      className={`w-full text-left block ${linkClasses(
+                        "/party-supplies"
+                      )} py-3 px-4 rounded-lg hover:bg-amber-50`}
                       style={{
                         animationDelay: `${index * 50}ms`,
                       }}
@@ -181,8 +198,9 @@ const Navbar = () => {
                       <span className="flex items-center justify-between">
                         {link.name}
                         <span
-                          className={`transform transition-transform duration-300 ${isPartySuppliesOpen ? 'rotate-180' : 'rotate-0'
-                            }`}
+                          className={`transform transition-transform duration-300 ${
+                            isPartySuppliesOpen ? "rotate-180" : "rotate-0"
+                          }`}
                         >
                           ▼
                         </span>
@@ -194,10 +212,11 @@ const Navbar = () => {
                           <Link
                             key={subLink.path}
                             to={subLink.path}
-                            className={`block px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors duration-200 ${location.pathname === subLink.path
-                                ? 'bg-gradient-to-r from-amber-400/20 to-yellow-400/20 text-white'
-                                : ''
-                              }`}
+                            className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-amber-50 hover:text-gray-900 transition-colors duration-200 ${
+                              location.pathname === subLink.path
+                                ? "bg-gradient-to-r from-amber-100 to-yellow-100 text-gray-900"
+                                : ""
+                            }`}
                             onClick={handleLinkClick}
                             style={{
                               animationDelay: `${(index + 1) * 50}ms`,
@@ -212,8 +231,13 @@ const Navbar = () => {
                 ) : (
                   <Link
                     to={link.path}
-                    className={`block ${linkClasses(link.path, link.isButton)} ${!link.isButton && 'py-3 px-4 rounded-lg hover:bg-gray-800/50'
-                      }`}
+                    className={`block ${linkClasses(
+                      link.path,
+                      link.isButton
+                    )} ${
+                      !link.isButton &&
+                      "py-3 px-4 rounded-lg hover:bg-amber-50"
+                    }`}
                     onClick={handleLinkClick}
                     style={{
                       animationDelay: `${index * 50}ms`,
