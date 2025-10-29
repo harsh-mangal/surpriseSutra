@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Menu, X, Phone, Mail, MapPin, Facebook, Instagram, Twitter, Youtube, Star, Quote, ChevronLeft, ChevronRight, Sparkles, Heart, Gift, Baby, PartyPopper, Calendar, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const OccasionsSection = () => {
+  const navigate=useNavigate();
   const occasions = [
     {
       icon: <Gift size={48} />,
@@ -33,7 +35,7 @@ const OccasionsSection = () => {
     },
     {
       icon: <Calendar size={48} />,
-      title: "Corporate Events",
+      title: "Corporate Event",
       description: "Professional, polished decoration services for business celebrations",
       color: "blue",
       gradient: "from-blue-500 to-cyan-500"
@@ -48,10 +50,8 @@ const OccasionsSection = () => {
   ];
 
   return (
-    <section id="services" className="relative py-24 md:py-32 bg-gradient-to-br from-slate-50 via-rose-50 to-amber-50 overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(251,191,36,0.1),transparent_40%)]"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(244,63,94,0.1),transparent_40%)]"></div>
+    <section id="services" className="relative py-24 md:py-32 bg-white overflow-hidden">
+    
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -106,7 +106,9 @@ const OccasionsSection = () => {
                 </p>
 
                 {/* CTA Button */}
-                <button className={`group/btn inline-flex items-center space-x-2 font-semibold text-gray-700 hover:text-transparent hover:bg-gradient-to-r hover:bg-clip-text ${occasion.gradient.replace('from-', 'hover:from-').replace('to-', 'hover:to-')} transition-all duration-300`}>
+                <button className={`group/btn inline-flex items-center space-x-2 font-semibold text-gray-700  hover:bg-gradient-to-r hover:bg-clip-text ${occasion.gradient.replace('from-', 'hover:from-').replace('to-', 'hover:to-')} transition-all duration-300`}
+                 onClick={()=>navigate("/contact", { state: { occasion: occasion.title } })}
+                >
                   <span>Explore Packages</span>
                   <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform duration-300" />
                 </button>
@@ -123,7 +125,8 @@ const OccasionsSection = () => {
           <p className="text-gray-600 mb-6 text-lg">
             Don't see your occasion? We create custom themes for any celebration!
           </p>
-          <button className="group bg-gradient-to-r from-red-600 to-rose-600 text-white px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl transition-all duration-300 shadow-xl inline-flex items-center space-x-2 hover:scale-105">
+          <button onClick={()=>navigate('/contact')} className="group bg-gradient-to-r from-red-600 to-rose-600 text-white px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl transition-all duration-300 shadow-xl inline-flex items-center space-x-2 hover:scale-105"
+          >
             <span>Request Custom Quote</span>
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </button>

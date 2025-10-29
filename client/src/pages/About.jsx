@@ -22,7 +22,7 @@ const AboutUs = () => {
                 </div>
 
                 {/* Red-Yellow Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-red-700/80 via-red-600/70 to-yellow-500/60 mix-blend-multiply"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-600/80 via-red-400/70 to-yellow-300/60 mix-blend-multiply"></div>
 
                 {/* Optional subtle pattern */}
                 <div className="absolute inset-0 opacity-10">
@@ -88,12 +88,12 @@ const AboutUs = () => {
 
 
             {/* Main Content Section */}
-            <section className="bg-gradient-to-br from-red-50 to-yellow-50 py-16 md:py-24 relative overflow-hidden">
+            <section className="bg-white py-16 md:py-24 relative overflow-hidden">
                 {/* Decorative Background Elements */}
-                <div className="absolute inset-0 pointer-events-none">
+                {/* <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute top-20 right-10 w-64 h-64 bg-red-200 rounded-full opacity-20 blur-3xl"></div>
                     <div className="absolute bottom-40 left-10 w-80 h-80 bg-yellow-200 rounded-full opacity-20 blur-3xl"></div>
-                </div>
+                </div> */}
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-20 relative z-10">
 

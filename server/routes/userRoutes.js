@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.post('/:id',getUserById)
+router.get('/:id',getUserById)
 router.put("/:id", updateUser);
 router.post("/:id/address", addAddress);
 router.put("/:id/address", updateAddress);

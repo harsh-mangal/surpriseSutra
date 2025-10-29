@@ -21,6 +21,7 @@ import {
   Calendar,
   ArrowRight,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   const images = [
@@ -31,6 +32,7 @@ const HeroSection = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate=useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -45,8 +47,8 @@ const HeroSection = () => {
       className="relative bg-white py-12 md:py-24 overflow-hidden"
     >
       {/* Luxury gradient overlays */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,215,0,0.1),transparent_50%)]"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(220,38,38,0.08),transparent_50%)]"></div>
+      {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,215,0,0.1),transparent_50%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(220,38,38,0.08),transparent_50%)]"></div> */}
 
       {/* Subtle animated sparkles */}
 
@@ -72,7 +74,7 @@ const HeroSection = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
-              <button className="group bg-gradient-to-r from-red-600 to-rose-600 text-white px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl transition-all duration-300 shadow-xl flex items-center justify-center space-x-2 hover:scale-105">
+              <button onClick={()=>navigate('/contact')} className="group bg-gradient-to-r from-red-600 to-rose-600 text-white px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl transition-all duration-300 shadow-xl flex items-center justify-center space-x-2 hover:scale-105">
                 <span>Book Your Experience</span>
                 <ArrowRight
                   size={20}

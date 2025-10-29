@@ -1,10 +1,10 @@
 // src/pages/ProfilePage.jsx
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, MapPin, Plus, Edit, Trash2, Check, X, ArrowLeft, Package,Heart,LogOut } from 'lucide-react';
+import { Mail, Lock, User, MapPin, Plus, Edit, Trash2, Check, X, ArrowLeft, Package, Heart, LogOut } from 'lucide-react';
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:5000/api/user';
+const API_BASE = 'http://localhost:5005/api/user';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const ProfilePage = () => {
   const [editingProfile, setEditingProfile] = useState(false);
   const [editingAddressIndex, setEditingAddressIndex] = useState(null);
   const [showAddAddress, setShowAddAddress] = useState(false);
-  const [userId,setUserId]=useState('');
+  const [userId, setUserId] = useState('');
 
   // Form states
   const [profileForm, setProfileForm] = useState({ name: '', email: '', password: '' });
@@ -24,11 +24,19 @@ const ProfilePage = () => {
   });
 
   // Get user ID from localStorage
-  useEffect(()=>{
-    const userData = localStorage.getItem('user')
-  setUserId(userData?._id)
-  },[])
- 
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      try {
+        const parsedUser = JSON.parse(userData);
+        setUserId(parsedUser?._id);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+      }
+    }
+  }, []);
+
+
 
   useEffect(() => {
     fetchUser();
@@ -161,12 +169,12 @@ const ProfilePage = () => {
             {success}
           </div>
         )}
-        {error && (
+        {/* {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl flex items-center gap-2">
             <X className="w-5 h-5" />
             {error}
           </div>
-        )}
+        )} */}
 
         <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Profile Section */}
@@ -472,7 +480,7 @@ const ProfilePage = () => {
               </Link>
               <button
                 onClick={() => {
-                  localStorage.removeItem('userId');
+                  localStorage.removeItem('user');
                   navigate('/login');
                 }}
                 className="w-full p-3 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition flex items-center justify-center gap-2"

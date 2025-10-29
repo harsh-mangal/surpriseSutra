@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Gift, Calendar, Baby, Heart, Cake, Users, Sparkles, Star, ArrowRight, Package, CheckCircle, PartyPopper, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ThemedPartySupplies() {
   const [hoveredCard, setHoveredCard] = useState(null);
+  const navigate=useNavigate();
 
   const partyTypes = [
     {
@@ -68,9 +70,9 @@ export default function ThemedPartySupplies() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 font-sans">
+    <div className="min-h-screen bg-white font-sans">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-rose-600 via-orange-500 to-yellow-500">
+      <div className="relative overflow-hidden bg-gradient-to-r from-rose-500 via-orange-400 to-yellow-500">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC41Ij48cGF0aCBkPSJNMzYgMzBoLTEydjEyaDEyVjMwem0wLTEyaC0xMnYxMmgxMlYxOHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
         
         {/* Floating decoration elements */}
@@ -92,10 +94,11 @@ export default function ThemedPartySupplies() {
               Themed Party Supplies
             </h1>
             <p className="text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 text-white font-medium max-w-3xl mx-auto">
-              🎉 Transform your celebrations into unforgettable moments with our premium party supplies.
+               Transform your celebrations into unforgettable moments with our premium party supplies.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <button
+              onClick={()=>navigate('/products')}
                 aria-label="Explore party supplies"
                 className="min-w-[150px] bg-white text-rose-600 px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-yellow-100 transition-all transform hover:scale-105 shadow-lg border-2 border-transparent hover:border-yellow-300 flex items-center justify-center gap-2 sm:gap-3"
               >
@@ -104,6 +107,7 @@ export default function ThemedPartySupplies() {
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
               <button
+              onClick={()=>navigate('/contact')}
                 aria-label="Get a free quote"
                 className="min-w-[150px] bg-transparent border-2 border-white text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-white hover:text-rose-600 transition-all transform hover:scale-105 shadow-lg"
               >
@@ -193,13 +197,13 @@ export default function ThemedPartySupplies() {
                       </div>
                     ))}
                   </div>
-                  <button
+                  {/* <button
                     aria-label={`View ${party.title} collection`}
                     className={`w-full py-2 sm:py-3 rounded-xl font-semibold text-white text-base sm:text-lg bg-gradient-to-r ${party.gradient} transition-all hover:shadow-md hover:scale-105 flex items-center justify-center gap-2`}
                   >
                     View Collection
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </button>
+                  </button> */}
                 </div>
               </div>
             );
@@ -209,7 +213,7 @@ export default function ThemedPartySupplies() {
 
       {/* CTA Section */}
       <div className="max-w-screen-2xl mx-auto px-4 py-12 sm:py-16 lg:py-20">
-        <div className="relative bg-gradient-to-r from-rose-600 via-orange-500 to-yellow-500 rounded-2xl shadow-lg overflow-hidden">
+        <div className="relative bg-gradient-to-r from-rose-400 via-orange-400 to-yellow-300 rounded-2xl shadow-lg overflow-hidden">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20"></div>
           
           {/* Floating Elements */}
@@ -224,22 +228,23 @@ export default function ThemedPartySupplies() {
               Ready to Create <span className="text-yellow-200">Magic?</span>
             </h2>
             <p className="text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 max-w-xl sm:max-w-2xl mx-auto font-medium leading-relaxed">
-              Design the perfect celebration with our premium themed party supplies! 🎈✨
+              Design the perfect celebration with our premium themed party supplies!
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <button
+              onClick={()=>navigate('/contact')}
                 aria-label="Get started with party supplies"
                 className="min-w-[150px] bg-white text-rose-600 px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-yellow-100 transition-all transform hover:scale-105 shadow-lg border-2 border-yellow-200"
               >
                 <Zap className="w-5 h-5 sm:w-6 sm:h-6 inline-block mr-2" />
                 Get Started Now
               </button>
-              <button
+              {/* <button
                 aria-label="Contact us for party supplies"
                 className="min-w-[150px] bg-transparent border-2 border-white text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-white hover:text-rose-600 transition-all transform hover:scale-105 shadow-lg"
               >
                 Contact Us Today
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

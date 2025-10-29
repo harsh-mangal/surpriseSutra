@@ -9,7 +9,7 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [cart, setCart] = useState({});
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   // Filter States
   const [searchTerm, setSearchTerm] = useState('');
@@ -36,7 +36,15 @@ const ProductList = () => {
 
   // Extract unique values for filters
   const vendors = useMemo(() => [...new Set(products.map(p => p.vendor).filter(Boolean))], [products]);
-  const categories = useMemo(() => [...new Set(products.map(p => p.productCategory).filter(Boolean))], [products]);
+  const categories = useMemo(() => {
+    // Extract unique top-level categories only
+    const allCategories = products
+      .map(p => p.productCategory?.split('>')[0]?.trim()) // get part before '>'
+      .filter(Boolean); // remove empty/null
+
+    return [...new Set(allCategories)]; // unique only
+  }, [products]);
+
   const tags = useMemo(() => {
     const tagSet = new Set();
     products.forEach(p => p.tags?.forEach(t => tagSet.add(t)));
@@ -82,7 +90,7 @@ const ProductList = () => {
 
     const productToAdd = {
       ...product,
-      id: product._id, 
+      id: product._id,
       qty: 1,
     };
 
@@ -99,13 +107,15 @@ const ProductList = () => {
     window.dispatchEvent(new Event('cartUpdated'));
   };
 
-  const buyNow = (productId, variant) => {
-    const product = products.find(p => p._id === productId);
+  const buyNow = (product) => {
     if (product) {
-      addToCart(product); 
+      addToCart(product);
+      navigate('/cart');
+    } else {
+      console.error('No product provided to buyNow');
     }
-    navigate('/cart');
   };
+
 
   const clearFilters = () => {
     setSearchTerm('');
@@ -132,7 +142,7 @@ const ProductList = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-gradient-to-r from-red-600 to-red-700 text-white shadow-xl">
         <div className="max-w-7xl mx-auto px-4 py-6">
@@ -156,13 +166,13 @@ const ProductList = () => {
           {/* Search Bar */}
           <div className="mt-4 max-w-2xl mx-auto">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-red-300 w-5 h-5" />
+              {/* <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-red-300 w-5 h-5" /> */}
               <input
                 type="text"
                 placeholder="Search products..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white/30 transition"
+                className="w-full pl-3 pr-4 py-3 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white/30 transition"
               />
             </div>
           </div>
@@ -286,11 +296,16 @@ const ProductList = () => {
                         </p>
 
                         <div className="flex items-center gap-2">
-                          <span className="text-2xl font-bold text-red-600">₹{price}</span>
-                          {comparePrice && comparePrice > price && (
-                            <span className="text-sm text-gray-500 line-through">₹{comparePrice}</span>
+                          {comparePrice ? (
+                            <>
+                              <span className="text-2xl font-bold text-red-600">₹{price}</span>
+                              <span className="text-sm text-gray-500 line-through">₹{comparePrice}</span>
+                            </>
+                          ) : (
+                            <span className="text-2xl font-bold text-red-600">₹{price}</span>
                           )}
                         </div>
+
 
                         {product.variants.length > 1 && (
                           <select className="w-full px-3 py-2 text-sm border border-orange-200 rounded-lg bg-yellow-50 text-orange-800 focus:outline-none focus:ring-2 focus:ring-yellow-400">
@@ -310,7 +325,7 @@ const ProductList = () => {
                             Add to Cart
                           </button>
                           <button
-                            onClick={() => buyNow(product, defaultVariant)}
+                            onClick={() => buyNow(product)}
                             className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg uppercase tracking-wide text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
                           >
                             Buy Now

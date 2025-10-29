@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Phone, Mail } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 const QuickQuoteSection = () => {
+  const location = useLocation();
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -10,6 +13,16 @@ const QuickQuoteSection = () => {
     date: '',
     message: ''
   });
+
+  // ✅ Prefill the occasion from navigation state
+  useEffect(() => {
+    if (location.state?.occasion) {
+      setFormData((prev) => ({
+        ...prev,
+        occasion: location.state.occasion
+      }));
+    }
+  }, [location.state]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,7 +38,7 @@ const QuickQuoteSection = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-br from-yellow-300 to-red-300">
+    <section id="contact" className="py-20 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
           
@@ -94,6 +107,7 @@ const QuickQuoteSection = () => {
                 required
               />
 
+              {/* Occasion Dropdown (auto-selects if state passed) */}
               <select 
                 name="occasion"
                 value={formData.occasion}
@@ -102,12 +116,12 @@ const QuickQuoteSection = () => {
                 required
               >
                 <option value="">Select Occasion</option>
-                <option value="birthday">Birthday Party</option>
-                <option value="babyshower">Baby Shower</option>
-                <option value="anniversary">Anniversary</option>
-                <option value="engagement">Engagement</option>
-                <option value="corporate">Corporate Event</option>
-                <option value="other">Other</option>
+                <option value="Birthday Party">Birthday Party</option>
+                <option value="Baby Shower">Baby Shower</option>
+                <option value="Anniversary">Anniversary</option>
+                <option value="Engagement">Engagement</option>
+                <option value="Corporate Event">Corporate Event</option>
+                <option value="Custom Events">Custom Events</option>
               </select>
 
               <input 

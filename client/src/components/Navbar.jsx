@@ -74,13 +74,17 @@ const Navbar = () => {
   // -------------------------------------------------
   // Click-outside for dropdowns
   // -------------------------------------------------
-  const profileRef = useRef(null);
+  const desktopProfileRef = useRef(null);
+  const mobileProfileRef = useRef(null);
   const cartRef = useRef(null);
 
   useEffect(() => {
     const handler = (e) => {
-      if (profileRef.current && !profileRef.current.contains(e.target))
+      // Close profile dropdown if clicked outside both desktop and mobile refs
+      if (desktopProfileRef.current && !desktopProfileRef.current.contains(e.target) &&
+          mobileProfileRef.current && !mobileProfileRef.current.contains(e.target)) {
         setIsProfileOpen(false);
+      }
       if (cartRef.current && !cartRef.current.contains(e.target))
         setIsCartOpen(false);
     };
@@ -112,16 +116,14 @@ const Navbar = () => {
 
   const linkClasses = (path, isButton = false) =>
     isButton
-      ? `group relative px-6 py-2 lg:px-8 lg:py-3 rounded-full font-semibold text-white transition-all duration-300 overflow-hidden ${
-          location.pathname === path
-            ? "bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-900 shadow-lg"
-            : "bg-gradient-to-r from-red-500 to-rose-500 hover:shadow-xl hover:scale-105"
-        }`
-      : `relative font-semibold text-base transition-all duration-300 group ${
-          location.pathname === path
-            ? "text-transparent bg-gradient-to-r from-amber-500 to-yellow-400 bg-clip-text"
-            : "text-gray-700 hover:text-gray-900"
-        }`;
+      ? `group relative px-6 py-2 lg:px-8 lg:py-3 rounded-full font-semibold text-white transition-all duration-300 overflow-hidden ${location.pathname === path
+        ? "bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-900 shadow-lg"
+        : "bg-gradient-to-r from-red-500 to-rose-500 hover:shadow-xl hover:scale-105"
+      }`
+      : `relative font-semibold text-base transition-all duration-300 group ${location.pathname === path
+        ? "text-transparent bg-gradient-to-r from-amber-500 to-yellow-400 bg-clip-text"
+        : "text-gray-700 hover:text-gray-900"
+      }`;
 
   const handleLinkClick = () => {
     setIsOpen(false);
@@ -134,12 +136,12 @@ const Navbar = () => {
   return (
     <nav
       className={`sticky top-0 z-50 transition-all duration-500 ${scrolled
-          ? 'bg-gray-900/95 backdrop-blur-md shadow-2xl'
-          : 'bg-gradient-to-r from-gray-900 via-black to-gray-900 shadow-lg'
+        ? "bg-gray-100/95 backdrop-blur-md shadow-2xl"
+        : "bg-gradient-to-r from-white via-gray-50 to-white shadow-lg"
         }`}
     >
       {/* Gradient border */}
-      <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-50"></div>
+      <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-70"></div>
 
       <div className="mx-auto px-4 sm:px-6 lg:px-20">
         <div className="flex justify-between items-center h-24 lg:h-28">
@@ -148,7 +150,7 @@ const Navbar = () => {
             className="flex-shrink-0 cursor-pointer group relative"
             onClick={() => navigate("/")}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-rose-400/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-rose-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <img
               src="https://ik.imagekit.io/sqpcbo0c0/Surprise%20Sutra/ChatGPT_Image_Oct_14__2025__05_14_06_PM-removebg-preview.png?updatedAt=1760442286996"
               alt="Surprise Sutra Logo"
@@ -158,41 +160,36 @@ const Navbar = () => {
 
           {/* Desktop Menu + Icons */}
           <div className="hidden md:flex items-center space-x-8 lg:space-x-10">
-            {/* ---- Nav Links ---- */}
             {navLinks.map((link) => (
               <div
                 key={link.path || link.name}
                 className="relative"
-                onMouseEnter={() =>
-                  link.subLinks && setIsPartySuppliesOpen(true)
-                }
-                onMouseLeave={() =>
-                  link.subLinks && setIsPartySuppliesOpen(false)
-                }
+                onMouseEnter={() => link.subLinks && setIsPartySuppliesOpen(true)}
+                onMouseLeave={() => link.subLinks && setIsPartySuppliesOpen(false)}
               >
                 {link.subLinks ? (
                   <>
                     <div className={linkClasses("/party-supplies")}>
-                      <span className="flex items-center cursor-pointer">
+                      <span className="flex items-center text-black cursor-pointer hover:text-amber-600 transition-colors duration-200">
                         {link.name}
                       </span>
                       <span
-                        className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-400 to-yellow-400 transform origin-left transition-transform duration-300 ${location.pathname.startsWith('/party-supplies')
-                            ? 'scale-x-100'
-                            : 'scale-x-0 group-hover:scale-x-100'
+                        className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-500 to-yellow-400 transform origin-left transition-transform duration-300 ${location.pathname.startsWith("/party-supplies")
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100"
                           }`}
                       ></span>
                     </div>
 
                     {isPartySuppliesOpen && (
-                      <div className="absolute top-full left-0 mt-0 w-52 bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-amber-500/20 overflow-hidden">
+                      <div className="absolute top-full left-0 mt-0 w-52 bg-white rounded-lg shadow-xl border border-amber-500/20 overflow-hidden">
                         {link.subLinks.map((sub) => (
                           <Link
                             key={sub.path}
                             to={sub.path}
-                            className={`block px-4 py-3 text-sm font-medium text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors duration-200 ${location.pathname === sub.path
-                                ? 'bg-gradient-to-r from-amber-400/20 to-yellow-400/20 text-white'
-                                : ''
+                            className={`block px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${location.pathname === sub.path
+                              ? "bg-amber-100 text-amber-600"
+                              : ""
                               }`}
                             onClick={handleLinkClick}
                           >
@@ -211,16 +208,20 @@ const Navbar = () => {
                     {!link.isButton && (
                       <>
                         <span
-                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-400 to-yellow-400 transform origin-left transition-transform duration-300 ${location.pathname === link.path
-                              ? 'scale-x-100'
-                              : 'scale-x-0 group-hover:scale-x-100'
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-500 to-yellow-400 transform origin-left transition-transform duration-300 ${location.pathname === link.path
+                            ? "scale-x-100"
+                            : "scale-x-0 group-hover:scale-x-100"
                             }`}
                         ></span>
-                        {link.name}
+                        <span
+                          className={`text-black hover:text-amber-600 transition-colors duration-200`}
+                        >
+                          {link.name}
+                        </span>
                       </>
                     )}
                     {link.isButton && (
-                      <span className="relative inline-flex items-center justify-center text-white font-semibold py-2 px-0 rounded-l-full rounded-r-none">
+                      <span className="relative inline-flex items-center justify-center text-white font-semibold py-2 px-4  rounded-full hover:opacity-90 transition">
                         <span className="mr-2">{link.name}</span>
                         <Sparkles size={16} className="mr-1" />
                       </span>
@@ -230,11 +231,11 @@ const Navbar = () => {
               </div>
             ))}
 
-            {/* ==== CART ICON ==== */}
+            {/* CART ICON */}
             <div ref={cartRef} className="relative">
               <button
-                onClick={() => navigate('/cart')}
-                className="relative p-2 text-gray-300 hover:text-amber-400 transition-colors"
+                onClick={() => navigate("/cart")}
+                className="relative p-2 text-black hover:text-amber-600 transition-colors"
               >
                 <ShoppingCart size={24} />
                 {totalItems > 0 && (
@@ -245,43 +246,45 @@ const Navbar = () => {
               </button>
             </div>
 
-            {/* ==== PROFILE ICON ==== */}
-            <div ref={profileRef} className="relative">
+            {/* PROFILE ICON - DESKTOP */}
+            <div ref={desktopProfileRef} className="relative">
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="flex items-center gap-1 p-2 text-gray-300 hover:text-amber-400 transition-colors"
+                className="flex items-center gap-1 p-2 text-black hover:text-amber-600 transition-colors"
               >
                 <User size={24} />
                 <ChevronDown
                   size={16}
-                  className={`transition-transform ${isProfileOpen ? 'rotate-180' : ''}`}
+                  className={`transition-transform ${isProfileOpen ? "rotate-180" : ""}`}
                 />
               </button>
 
               {isProfileOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-lg shadow-2xl border border-amber-500/20 overflow-hidden">
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-2xl border border-amber-500/20 overflow-hidden z-[9999]">
                   <Link
                     to="/profile"
                     onClick={() => setIsProfileOpen(false)}
-                    className="block px-4 py-3 text-sm font-medium text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors"
+                    className="block px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors"
                   >
                     Profile
                   </Link>
+
                   <Link
                     to="/my-orders"
                     onClick={() => setIsProfileOpen(false)}
-                    className="block px-4 py-3 text-sm font-medium text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors"
+                    className="block px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors"
                   >
                     My Orders
                   </Link>
+
                   <button
                     onClick={() => {
-                      localStorage.removeItem('token');
-                      localStorage.removeItem('user')
+                      localStorage.removeItem("token");
+                      localStorage.removeItem("user");
                       setIsProfileOpen(false);
-                      navigate('/login');
+                      navigate("/login");
                     }}
-                    className="w-full text-left px-4 py-3 text-sm font-medium text-red-400 hover:bg-gray-800/50 transition-colors"
+                    className="w-full text-left px-4 py-3 text-sm font-medium text-red-500 hover:bg-red-50 transition-colors"
                   >
                     Logout
                   </button>
@@ -292,10 +295,13 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-4">
-            {/* Mobile cart badge */}
+            {/* Mobile cart */}
             <button
-              onClick={() => setIsCartOpen(!isCartOpen)}
-              className="relative p-2 text-gray-300 hover:text-amber-400"
+              onClick={() => {
+                setIsOpen(false);
+                navigate('/cart');
+              }}
+              className="relative p-2 text-black hover:text-amber-600"
             >
               <ShoppingCart size={24} />
               {totalItems > 0 && (
@@ -306,17 +312,59 @@ const Navbar = () => {
             </button>
 
             {/* Mobile profile */}
-            <button
-              onClick={() => setIsProfileOpen(!isProfileOpen)}
-              className="p-2 text-gray-300 hover:text-amber-400"
-            >
-              <User size={24} />
-            </button>
+            <div ref={mobileProfileRef} className="relative">
+              <button
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className="p-2 text-black hover:text-amber-600"
+              >
+                <User size={24} />
+              </button>
+
+              {isProfileOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-2xl border border-amber-500/20 overflow-hidden z-[9999]">
+                  <Link
+                    to="/profile"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsProfileOpen(false);
+                      setIsOpen(false);
+                    }}
+                    className="block px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors"
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    to="/my-orders"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsProfileOpen(false);
+                      setIsOpen(false);
+                    }}
+                    className="block px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors"
+                  >
+                    My Orders
+                  </Link>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      localStorage.removeItem("token");
+                      localStorage.removeItem("user");
+                      setIsProfileOpen(false);
+                      setIsOpen(false);
+                      navigate("/login");
+                    }}
+                    className="w-full text-left px-4 py-3 text-sm font-medium text-red-500 hover:bg-red-50 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
 
             {/* Hamburger */}
             <button
               onClick={toggleMenu}
-              className="p-2 text-gray-300 hover:text-amber-400"
+              className="p-2 text-black hover:text-amber-600"
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
@@ -325,11 +373,10 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
-            isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
-          }`}
+          className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+            }`}
         >
-          <div className="pb-6 pt-2 space-y-3 bg-gradient-to-b from-gray-900/50 to-black/50 backdrop-blur-sm rounded-2xl px-4 mt-2">
+          <div className="pb-6 pt-2 space-y-3 bg-gray-100 rounded-2xl px-4 mt-2 shadow-inner">
             {navLinks.map((link, idx) => (
               <div key={link.path || link.name}>
                 {link.subLinks ? (
@@ -337,14 +384,14 @@ const Navbar = () => {
                     <button
                       onClick={() => setIsPartySuppliesOpen(!isPartySuppliesOpen)}
                       className={`w-full text-left block ${linkClasses(
-                        '/party-supplies'
-                      )} py-3 px-4 rounded-lg hover:bg-gray-800/50`}
+                        "/party-supplies"
+                      )} py-3 px-4 rounded-lg text-black hover:text-amber-600 hover:bg-amber-50`}
                       style={{ animationDelay: `${idx * 50}ms` }}
                     >
                       <span className="flex items-center justify-between">
                         {link.name}
                         <span
-                          className={`transform transition-transform duration-300 ${isPartySuppliesOpen ? 'rotate-180' : ''
+                          className={`transform transition-transform duration-300 ${isPartySuppliesOpen ? "rotate-180" : ""
                             }`}
                         >
                           ▼
@@ -357,9 +404,9 @@ const Navbar = () => {
                           <Link
                             key={sub.path}
                             to={sub.path}
-                            className={`block px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors duration-200 ${location.pathname === sub.path
-                                ? 'bg-gradient-to-r from-amber-400/20 to-yellow-400/20 text-white'
-                                : ''
+                            className={`block px-4 py-2 text-sm font-medium text-gray-800 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 ${location.pathname === sub.path
+                              ? "bg-amber-100 text-amber-600"
+                              : ""
                               }`}
                             onClick={handleLinkClick}
                             style={{ animationDelay: `${(idx + 1) * 50}ms` }}
@@ -373,18 +420,14 @@ const Navbar = () => {
                 ) : (
                   <Link
                     to={link.path}
-                    className={`block ${linkClasses(
-                      link.path,
-                      link.isButton
-                    )} ${
-                      !link.isButton &&
-                      "py-3 px-4 rounded-lg hover:bg-amber-50"
-                    }`}
+                    className={`block ${linkClasses(link.path, link.isButton)} ${!link.isButton &&
+                      "py-3 px-4 rounded-lg text-black hover:text-amber-600 hover:bg-amber-50"
+                      }`}
                     onClick={handleLinkClick}
                     style={{ animationDelay: `${idx * 50}ms` }}
                   >
                     {link.isButton ? (
-                      <span className="relative z-10 flex items-center justify-center space-x-2">
+                      <span className="relative z-10 flex items-center justify-center space-x-2 text-white py-2 px-4 rounded-full">
                         <span>{link.name}</span>
                         <Sparkles size={16} />
                       </span>
@@ -401,27 +444,27 @@ const Navbar = () => {
               </div>
             ))}
 
-            {/* Mobile cart drawer (same as desktop but inside mobile menu) */}
+            {/* Mobile Cart */}
             {isCartOpen && (
-              <div className="mt-4 p-4 bg-gray-800/50 rounded-lg">
-                <h3 className="text-lg font-semibold text-white mb-2">Cart</h3>
+              <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Cart</h3>
                 {cartItems.length === 0 ? (
-                  <p className="text-gray-400">Empty</p>
+                  <p className="text-gray-500">Empty</p>
                 ) : (
                   <>
                     <ul className="space-y-1 max-h-40 overflow-y-auto">
                       {cartItems.map((it) => (
                         <li
                           key={it.id}
-                          className="flex justify-between text-sm text-gray-300"
+                          className="flex justify-between text-sm text-gray-800"
                         >
                           <span>{it.name}</span>
                           <span className="flex items-center gap-2">
-                            <span className="text-amber-400">₹{it.price}</span>
+                            <span className="text-amber-600">₹{it.price}</span>
                             <span className="text-xs">×{it.qty}</span>
                             <button
                               onClick={() => removeFromCart(it.id)}
-                              className="text-red-400"
+                              className="text-red-500"
                             >
                               ×
                             </button>
@@ -438,37 +481,6 @@ const Navbar = () => {
                     </Link>
                   </>
                 )}
-              </div>
-            )}
-
-            {/* Mobile profile dropdown */}
-            {isProfileOpen && (
-              <div className="mt-4 p-4 bg-gray-800/50 rounded-lg space-y-2">
-                <Link
-                  to="/profile"
-                  onClick={() => setIsProfileOpen(false)}
-                  className="block text-sm text-gray-300 hover:text-white"
-                >
-                  Profile
-                </Link>
-                <Link
-                  to="/my-orders"
-                  onClick={() => setIsProfileOpen(false)}
-                  className="block text-sm text-gray-300 hover:text-white"
-                >
-                  My Orders
-                </Link>
-                <button
-                  onClick={() => {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('user')
-                    setIsProfileOpen(false);
-                    navigate('/login');
-                  }}
-                  className="w-full text-left text-sm text-red-400"
-                >
-                  Logout
-                </button>
               </div>
             )}
           </div>

@@ -17,7 +17,7 @@ export default function HomePage() {
         <ReviewsSection />
         <InstagramSection />
         
-        <QuickQuoteSection />
+        {/* <QuickQuoteSection /> */}
    </div>
   )
 }

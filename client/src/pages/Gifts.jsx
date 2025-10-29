@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Gift, Star, Package, Heart, Sparkles, ArrowRight, CheckCircle, Palette, Wand2 } from 'lucide-react';
+import {useNavigate} from 'react-router-dom'
 
 export default function Gifts() {
   const [hoveredGift, setHoveredGift] = useState(null);
+  const navigate=useNavigate();
 
   const giftItems = [
     {
@@ -68,9 +70,9 @@ export default function Gifts() {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 via-white to-gray-100 font-sans">
+    <div className="bg-white font-sans">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-rose-600 via-orange-500 to-yellow-500">
+      <div className="relative overflow-hidden bg-gradient-to-r from-rose-500 via-orange-400 to-yellow-500">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC41Ij48cGF0aCBkPSJNMzYgMzBoLTEydjEyaDEyVjMwem0wLTEyaC0xMnYxMmgxMlYxOHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
         
         {/* Floating decoration elements */}
@@ -92,18 +94,19 @@ export default function Gifts() {
               Thoughtful Gifts
             </h1>
             <p className="text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 text-white font-medium max-w-3xl mx-auto">
-              🎁 Create heartfelt moments with our personalized gift collection, perfect for any occasion.
+              Create heartfelt moments with our personalized gift collection, perfect for any occasion.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <button
+              {/* <button
                 aria-label="Explore gift collection"
                 className="min-w-[150px] bg-white text-rose-600 px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-yellow-100 transition-all transform hover:scale-105 shadow-lg border-2 border-transparent hover:border-yellow-300 flex items-center justify-center gap-2 sm:gap-3"
               >
                 <Star className="w-5 h-5 sm:w-6 sm:h-6" />
                 Explore Gifts
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
-              </button>
+              </button> */}
               <button
+                onClick={()=>navigate('/contact')}
                 aria-label="Get gift customization quote"
                 className="min-w-[150px] bg-transparent border-2 border-white text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-white hover:text-rose-600 transition-all transform hover:scale-105 shadow-lg"
               >
@@ -152,7 +155,7 @@ export default function Gifts() {
           </h2>
           <div className="w-24 sm:w-32 h-1 bg-gradient-to-r from-rose-600 to-yellow-500 mx-auto rounded-full mb-4 sm:mb-6"></div>
           <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-xl sm:max-w-2xl mx-auto font-medium">
-            Discover personalized gifts to make every moment special. 🎁
+            Discover personalized gifts to make every moment special.
           </p>
         </div>
 
@@ -194,13 +197,13 @@ export default function Gifts() {
                       </div>
                     ))}
                   </div>
-                  <button
+                  {/* <button
                     aria-label={`Explore ${gift.title}`}
                     className={`w-full py-2 sm:py-3 rounded-xl font-semibold text-white text-base sm:text-lg bg-gradient-to-r ${gift.gradient} transition-all hover:shadow-md hover:scale-105 flex items-center justify-center gap-2`}
                   >
                     <Wand2 className="w-4 h-4 sm:w-5 sm:h-5" />
                     Explore Now
-                  </button>
+                  </button> */}
                 </div>
               </div>
             );
@@ -210,7 +213,7 @@ export default function Gifts() {
 
       {/* CTA Section */}
       <div className="max-w-screen-2xl mx-auto px-4 py-12 sm:py-16 lg:py-20">
-        <div className="relative bg-gradient-to-r from-rose-600 via-orange-500 to-yellow-500 rounded-2xl shadow-lg overflow-hidden">
+        <div className="relative bg-gradient-to-r from-rose-500 via-orange-400 to-yellow-500 rounded-2xl shadow-lg overflow-hidden">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20"></div>
           
           {/* Floating Elements */}

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Palette, Scissors, Wand2, MessageSquare, Image, Gift, Crown, Shirt, Banknote, Camera, Clock, Award } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function CustomizedPartySupplies() {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const navigate=useNavigate();
 
   const customizableItems = [
     {
@@ -75,9 +77,9 @@ export default function CustomizedPartySupplies() {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 via-white to-gray-100 font-sans">
+    <div className="bg-white font-sans">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-rose-600 via-orange-500 to-yellow-500">
+      <div className="relative overflow-hidden bg-gradient-to-r from-rose-500 via-orange-400 to-yellow-500">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC41Ij48cGF0aCBkPSJNMzYgMzBoLTEydjEyaDEyVjMwem0wLTEyaC0xMnYxMmgxMlYxOHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
         
         {/* Floating decoration elements */}
@@ -103,18 +105,19 @@ export default function CustomizedPartySupplies() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <button
+              onClick={()=>navigate('/contact')}
                 aria-label="Start customizing party supplies"
                 className="min-w-[150px] bg-white text-rose-600 px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-yellow-100 transition-all transform hover:scale-105 shadow-lg border-2 border-transparent hover:border-yellow-300 flex items-center justify-center gap-2 sm:gap-3"
               >
                 <Wand2 className="w-5 h-5 sm:w-6 sm:h-6" />
                 Start Customizing
               </button>
-              <button
+              {/* <button
                 aria-label="View customization gallery"
                 className="min-w-[150px] bg-transparent border-2 border-white text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-white hover:text-rose-600 transition-all transform hover:scale-105 shadow-lg"
               >
                 View Gallery
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -236,13 +239,13 @@ export default function CustomizedPartySupplies() {
                       </div>
                     ))}
                   </div>
-                  <button
+                  {/* <button
                     aria-label={`Customize ${item.title}`}
                     className={`w-full py-2 sm:py-3 rounded-xl font-semibold text-white text-base sm:text-lg bg-gradient-to-r ${item.gradient} transition-all hover:shadow-md hover:scale-105 flex items-center justify-center gap-2`}
                   >
                     <Wand2 className="w-4 h-4 sm:w-5 sm:h-5" />
                     Customize Now
-                  </button>
+                  </button> */}
                 </div>
               </div>
             );
@@ -252,7 +255,7 @@ export default function CustomizedPartySupplies() {
 
       {/* CTA Section */}
       <div className="max-w-screen-2xl mx-auto px-4 py-12 sm:py-16 lg:py-20">
-        <div className="relative bg-gradient-to-r from-rose-600 via-orange-500 to-yellow-500 rounded-2xl shadow-lg overflow-hidden">
+        <div className="relative bg-gradient-to-r from-rose-500 via-orange-400 to-yellow-500 rounded-2xl shadow-lg overflow-hidden">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20"></div>
           
           {/* Floating Elements */}
@@ -267,17 +270,18 @@ export default function CustomizedPartySupplies() {
               Ready to <span className="text-yellow-200">Personalize?</span>
             </h2>
             <p className="text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 max-w-xl sm:max-w-2xl mx-auto font-medium leading-relaxed">
-              Let's create something special together! Share your ideas and we'll bring them to life! 🎨✨
+              Let's create something special together! Share your ideas and we'll bring them to life! 
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <button
+              {/* <button
                 aria-label="Start designing party supplies"
                 className="min-w-[150px] bg-white text-rose-600 px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-yellow-100 transition-all transform hover:scale-105 shadow-lg border-2 border-yellow-200"
               >
                 <Wand2 className="w-5 h-5 sm:w-6 sm:h-6 inline-block mr-2" />
                 Start Your Design
-              </button>
+              </button> */}
               <button
+              onClick={()=>navigate('/contact')}
                 aria-label="Get a free consultation"
                 className="min-w-[150px] bg-transparent border-2 border-white text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-white hover:text-rose-600 transition-all transform hover:scale-105 shadow-lg"
               >

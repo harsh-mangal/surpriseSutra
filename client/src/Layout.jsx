@@ -14,6 +14,7 @@ import CheckoutPage from "./pages/CheckOut";
 import { LogIn } from "lucide-react";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/Profile";
+import MyOrdersPage from "./pages/MyOrders";
 
 
 function Layout() {
@@ -32,6 +33,7 @@ function Layout() {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+             <Route path="/my-orders" element={<MyOrdersPage />} />
 
             <Route path="/party-supplies/themed" element={<ThemedPartySupplies />} />
              <Route path="/party-supplies/customized" element={<CustomizedPartySupplies />} />

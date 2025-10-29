@@ -52,7 +52,7 @@ const CartPage = () => {
     // Empty Cart
     if (cartItems.length === 0) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 flex flex-col items-center justify-center p-6">
+            <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6">
                 <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 text-center max-w-md w-full">
                     <ShoppingBag className="w-16 h-16 md:w-20 md:h-20 mx-auto text-gray-400 mb-6" />
                     <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Your cart is empty</h2>
@@ -70,7 +70,7 @@ const CartPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 py-8 md:py-12 px-4">
+        <div className="min-h-screen bg-white py-8 md:py-12 px-4">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-3xl p-6 md:p-8 shadow-xl mb-6 md:mb-8">

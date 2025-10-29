@@ -40,9 +40,9 @@ export default function ContactUs() {
     ];
 
     return (
-        <div className="bg-gradient-to-br from-gray-50 via-white to-gray-100 font-sans">
+        <div className="bg-white font-sans">
             {/* Hero Section - Full Width */}
-            <div className="relative overflow-hidden bg-gradient-to-r from-red-600 via-red-500 to-yellow-500">
+            <div className="relative overflow-hidden bg-gradient-to-r from-red-500 via-red-400 to-yellow-500">
                 <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzBoLTEydjEyaDEyVjMwem0wLTEyaC0xMnYxMmgxMlYxOHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
 
                 {/* Animated floating elements */}
@@ -55,7 +55,7 @@ export default function ContactUs() {
                     <Heart className="absolute top-32 right-1/4 w-10 h-10 text-yellow-200 opacity-20 animate-pulse" style={{ animationDelay: '0.8s' }} />
                 </div>
 
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28 ">
                     <div className="text-center">
                         <div className="flex justify-center mb-6 sm:mb-8">
                             <div className="relative">
@@ -69,9 +69,9 @@ export default function ContactUs() {
                             Let's Connect
                         </h1>
                         <p className="text-lg sm:text-xl lg:text-2xl mb-8 sm:mb-10 text-white text-opacity-95 font-medium max-w-3xl mx-auto leading-relaxed">
-                            Have questions? Need help planning your celebration? We're here to make your event unforgettable! ✨
+                            Have questions? Need help planning your celebration? We're here to make your event unforgettable! 
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        {/* <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                             <a
                                 href="mailto:support@partysupplies.com"
                                 aria-label="Email us"
@@ -88,7 +88,7 @@ export default function ContactUs() {
                                 <Phone className="w-5 h-5 sm:w-6 sm:h-6 group-hover:rotate-12 transition-transform" />
                                 <span>Call Now</span>
                             </a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
