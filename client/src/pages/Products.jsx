@@ -2,12 +2,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { Search, Filter, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [cart, setCart] = useState({});
+  const navigate=useNavigate();
 
   // Filter States
   const [searchTerm, setSearchTerm] = useState('');
@@ -73,17 +75,36 @@ const ProductList = () => {
     });
   }, [products, searchTerm, priceRange, selectedVendors, selectedCategories, selectedTags]);
 
-  const addToCart = (productId, variant) => {
-    setCart(prev => ({
-      ...prev,
-      [productId]: { variant, quantity: (prev[productId]?.quantity || 0) + 1 }
-    }));
-    alert(`Added to cart!`);
+  // ProductList.jsx
+  const addToCart = (product) => {
+    const CART_KEY = 'surprise_sutra_cart';
+    const current = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+
+    const productToAdd = {
+      ...product,
+      id: product._id, 
+      qty: 1,
+    };
+
+    const existing = current.find(i => i.id === productToAdd.id);
+    if (existing) {
+      localStorage.setItem(
+        CART_KEY,
+        JSON.stringify(current.map(i => i.id === productToAdd.id ? { ...i, qty: i.qty + 1 } : i))
+      );
+    } else {
+      localStorage.setItem(CART_KEY, JSON.stringify([...current, productToAdd]));
+    }
+
+    window.dispatchEvent(new Event('cartUpdated'));
   };
 
   const buyNow = (productId, variant) => {
-    addToCart(productId, variant);
-    alert('Redirecting to checkout...');
+    const product = products.find(p => p._id === productId);
+    if (product) {
+      addToCart(product); 
+    }
+    navigate('/cart');
   };
 
   const clearFilters = () => {
@@ -283,13 +304,13 @@ const ProductList = () => {
 
                         <div className="flex gap-2 pt-2">
                           <button
-                            onClick={() => addToCart(product._id, defaultVariant)}
+                            onClick={() => addToCart(product)}
                             className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-red-800 font-bold py-3 px-4 rounded-lg uppercase tracking-wide text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
                           >
                             Add to Cart
                           </button>
                           <button
-                            onClick={() => buyNow(product._id, defaultVariant)}
+                            onClick={() => buyNow(product, defaultVariant)}
                             className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg uppercase tracking-wide text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
                           >
                             Buy Now

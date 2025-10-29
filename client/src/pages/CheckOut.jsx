@@ -1,0 +1,343 @@
+// src/pages/CheckoutPage.jsx
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Check, CreditCard, Package, Truck, Wallet } from 'lucide-react';
+
+const CART_KEY = 'surprise_sutra_cart';
+
+const getCart = () => JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+const saveCart = (items) => {
+  localStorage.setItem(CART_KEY, JSON.stringify(items));
+  window.dispatchEvent(new Event('cartUpdated'));
+};
+
+const CheckoutPage = () => {
+  const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState(getCart());
+  const [coupon, setCoupon] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState('cod');
+  const [sameAsBilling, setSameAsBilling] = useState(true);
+
+  // Form states
+  const [billing, setBilling] = useState({
+    name: '', email: '', phone: '', address: '', city: '', state: '', pincode: ''
+  });
+  const [shipping, setShipping] = useState({
+    name: '', address: '', city: '', state: '', pincode: ''
+  });
+
+  useEffect(() => {
+    const handler = () => setCartItems(getCart());
+    window.addEventListener('storage', handler);
+    window.addEventListener('cartUpdated', handler);
+    return () => {
+      window.removeEventListener('storage', handler);
+      window.removeEventListener('cartUpdated', handler);
+    };
+  }, []);
+
+  const subtotal = cartItems.reduce((sum, i) => {
+    const price = i.variants?.[0]?.price || i.price || 0;
+    return sum + price * i.qty;
+  }, 0);
+
+  const total = subtotal - discount;
+
+  const applyCoupon = () => {
+    if (coupon.trim().toUpperCase() === 'SURPRISE10') {
+      setDiscount(subtotal * 0.1);
+      alert('Coupon applied! 10% off');
+    } else {
+      alert('Invalid coupon code');
+    }
+  };
+
+  const placeOrder = () => {
+    if (!billing.name || !billing.email || !billing.phone || !billing.address || !billing.city || !billing.state || !billing.pincode) {
+      alert('Please fill all billing fields');
+      return;
+    }
+
+    // Mock success
+    alert(`Order placed! Total: ₹${total.toFixed(2)}`);
+    localStorage.removeItem(CART_KEY);
+    window.dispatchEvent(new Event('cartUpdated'));
+    navigate('/order-success');
+  };
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center p-6">
+        <div className="bg-white rounded-3xl shadow-2xl p-12 text-center max-w-md w-full">
+          <Package className="w-20 h-20 mx-auto text-gray-400 mb-6" />
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Cart is empty</h2>
+          <Link
+            to="/products"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-full hover:scale-105 transition-transform"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Continue Shopping
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 py-8 md:py-12 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-3xl p-6 md:p-8 shadow-xl mb-6">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold flex items-center gap-3">
+            <Wallet className="w-8 h-8 md:w-10 md:h-10 text-amber-400" />
+            Checkout
+          </h1>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+          {/* Form Section */}
+          <div className="lg:col-span-2 space-y-6 order-2 lg:order-1">
+            {/* Billing Address */}
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <Truck className="w-6 h-6 text-amber-500" />
+                Billing Address
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder="Full Name *"
+                  value={billing.name}
+                  onChange={(e) => setBilling({ ...billing, name: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+                />
+                <input
+                  type="email"
+                  placeholder="Email *"
+                  value={billing.email}
+                  onChange={(e) => setBilling({ ...billing, email: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+                />
+                <input
+                  type="tel"
+                  placeholder="Phone *"
+                  value={billing.phone}
+                  onChange={(e) => setBilling({ ...billing, phone: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Address *"
+                  value={billing.address}
+                  onChange={(e) => setBilling({ ...billing, address: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 sm:col-span-2"
+                />
+                <input
+                  type="text"
+                  placeholder="City *"
+                  value={billing.city}
+                  onChange={(e) => setBilling({ ...billing, city: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+                />
+                <input
+                  type="text"
+                  placeholder="State *"
+                  value={billing.state}
+                  onChange={(e) => setBilling({ ...billing, state: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Pincode *"
+                  value={billing.pincode}
+                  onChange={(e) => setBilling({ ...billing, pincode: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+                />
+              </div>
+            </div>
+
+            {/* Shipping Address */}
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                  <Package className="w-6 h-6 text-amber-500" />
+                  Shipping Address
+                </h2>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={sameAsBilling}
+                    onChange={(e) => {
+                      setSameAsBilling(e.target.checked);
+                      if (e.target.checked) {
+                        setShipping({
+                          name: billing.name,
+                          address: billing.address,
+                          city: billing.city,
+                          state: billing.state,
+                          pincode: billing.pincode,
+                        });
+                      }
+                    }}
+                    className="w-5 h-5 text-amber-500 rounded focus:ring-amber-400"
+                  />
+                  <span className="text-sm font-medium">Same as billing</span>
+                </label>
+              </div>
+
+              {!sameAsBilling && (
+                <div className="grid sm:grid-cols-2 gap-4 mt-4">
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    value={shipping.name}
+                    onChange={(e) => setShipping({ ...shipping, name: e.target.value })}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Address"
+                    value={shipping.address}
+                    onChange={(e) => setShipping({ ...shipping, address: e.target.value })}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 sm:col-span-2"
+                  />
+                  <input
+                    type="text"
+                    placeholder="City"
+                    value={shipping.city}
+                    onChange={(e) => setShipping({ ...shipping, city: e.target.value })}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  />
+                  <input
+                    type="text"
+                    placeholder="State"
+                    value={shipping.state}
+                    onChange={(e) => setShipping({ ...shipping, state: e.target.value })}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Pincode"
+                    value={shipping.pincode}
+                    onChange={(e) => setShipping({ ...shipping, pincode: e.target.value })}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Payment Method */}
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <CreditCard className="w-6 h-6 text-amber-500" />
+                Payment Method
+              </h2>
+              <div className="space-y-3">
+                {[
+                  { id: 'cod', label: 'Cash on Delivery', icon: Wallet },
+                  { id: 'upi', label: 'UPI / QR', icon: CreditCard },
+                  { id: 'card', label: 'Credit / Debit Card', icon: CreditCard },
+                ].map((method) => (
+                  <label
+                    key={method.id}
+                    className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer transition-all ${
+                      paymentMethod === method.id
+                        ? 'border-amber-500 bg-amber-50'
+                        : 'border-gray-200 hover:border-amber-300'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <method.icon className="w-6 h-6 text-amber-600" />
+                      <span className="font-medium">{method.label}</span>
+                    </div>
+                    <input
+                      type="radio"
+                      name="payment"
+                      value={method.id}
+                      checked={paymentMethod === method.id}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      className="w-5 h-5 text-amber-500 focus:ring-amber-400"
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Order Summary (Sticky on Desktop) */}
+          <div className="lg:col-span-1 order-1 lg:order-2">
+            <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-6">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">Order Summary</h2>
+
+              <div className="max-h-64 overflow-y-auto mb-4 space-y-2">
+                {cartItems.map((item) => {
+                  const price = item.variants?.[0]?.price || item.price || 0;
+                  return (
+                    <div key={item.id} className="flex justify-between text-sm">
+                      <span className="text-gray-600 truncate max-w-[180px]">
+                        {item.title} × {item.qty}
+                      </span>
+                      <span className="font-medium">₹{(price * item.qty).toFixed(2)}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="border-t pt-4 space-y-3">
+                <div className="flex justify-between text-lg">
+                  <span>Subtotal</span>
+                  <span>₹{subtotal.toFixed(2)}</span>
+                </div>
+                {discount > 0 && (
+                  <div className="flex justify-between text-green-600">
+                    <span>Discount</span>
+                    <span>-₹{discount.toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between text-lg font-bold">
+                  <span>Total</span>
+                  <span className="text-red-600">₹{total.toFixed(2)}</span>
+                </div>
+              </div>
+
+              {/* Coupon */}
+              <div className="mt-6 flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Coupon code"
+                  value={coupon}
+                  onChange={(e) => setCoupon(e.target.value)}
+                  className="flex-1 px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+                />
+                <button
+                  onClick={applyCoupon}
+                  className="px-4 py-2 bg-amber-400 text-gray-900 font-bold rounded-lg hover:bg-amber-500 transition"
+                >
+                  Apply
+                </button>
+              </div>
+
+              <button
+                onClick={placeOrder}
+                className="w-full mt-6 bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-4 rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                <Check className="w-5 h-5" />
+                Place Order
+              </button>
+
+              <Link
+                to="/cart"
+                className="block text-center mt-4 text-gray-600 hover:text-red-600 font-medium"
+              >
+                ← Back to Cart
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CheckoutPage;

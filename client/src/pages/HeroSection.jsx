@@ -54,7 +54,7 @@ const HeroSection = () => {
         <Sparkles className="text-rose-400 opacity-40" size={20} />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 sm:px-6 lg:px-16">
+      <div className="relative mx-auto  px-6 sm:px-6 lg:px-16">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div className="space-y-2">
             <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-red-700 via-rose-600 to-amber-600 bg-clip-text text-transparent leading-tight tracking-tight">
@@ -128,7 +128,7 @@ const HeroSection = () => {
             </div>
 
             {/* Floating badge with enhanced design */}
-            <div className="absolute -bottom-8 -left-8 bg-gradient-to-br from-amber-400 to-yellow-300 text-red-800 p-6 rounded-2xl shadow-2xl border-4 border-white backdrop-blur-sm hover:scale-110 transition-transform duration-300">
+            <div className="absolute -bottom-8 -left-8 bg-gradient-to-br from-amber-400 to-yellow-300 text-red-800 p-6 ml-4 lg:ml-0 rounded-2xl shadow-2xl border-4 border-white backdrop-blur-sm hover:scale-110 transition-transform duration-300">
               <div className="flex items-center space-x-2">
                 <Sparkles className="text-red-700" size={24} />
                 <div>

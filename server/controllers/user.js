@@ -4,39 +4,57 @@ import jwt from "jsonwebtoken";
 
 // Register User
 export const registerUser = async (req, res) => {
-    const { name, email, password } = req.body;
+  const { name, email, password } = req.body;
 
-    try {
-        const existingUser = await User.findOne({ email });
-        if (existingUser) return res.status(400).json({ message: "Email already exists" });
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).json({ message: "Email already exists" });
 
-        const user = await User.create({ name, email, password });
-        res.status(201).json({ message: "User registered successfully", user });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
+    const user = await User.create({ name, email, password });
+    res.status(201).json({ message: "User registered successfully", user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 // Login User
 export const loginUser = async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    try {
-        const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ message: "Invalid email or password" });
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: "Invalid email or password" });
 
-        const isMatch = await user.matchPassword(password);
-        if (!isMatch) return res.status(400).json({ message: "Invalid email or password" });
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) return res.status(400).json({ message: "Invalid email or password" });
 
-        // Generate JWT Token
-        const token = jwt.sign({ id: user._id, role: user.role }, "surprisesutra@12345", {
-            expiresIn: "7d",
-        });
+    // Generate JWT Token
+    const token = jwt.sign({ id: user._id, role: user.role }, "surprisesutra@12345", {
+      expiresIn: "7d",
+    });
 
-        res.status(200).json({ message: "Login successful", token, user });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    res.status(200).json({ message: "Login successful", token, user: { _id: user._id }, });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+// ✅ Get user by ID
+export const getUserById = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await User.findById(userId).select("-password"); // remove password from response
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
+
+    res.status(200).json({ message: "User fetched successfully", user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 
