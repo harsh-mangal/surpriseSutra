@@ -15,11 +15,12 @@ import { LogIn } from "lucide-react";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/Profile";
 import MyOrdersPage from "./pages/MyOrders";
-
+import ScrollToTop from "./components/ScrollToTop";
 
 function Layout() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-1 bg-gray-100">
