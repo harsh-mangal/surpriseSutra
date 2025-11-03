@@ -10,17 +10,15 @@ const Navbar = () => {
   const [isPartySuppliesOpen, setIsPartySuppliesOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isThemedOpen, setIsThemedOpen] = useState(false);
+
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  // -------------------------------------------------
-  // LOCAL CART (inside Navbar – uses localStorage)
-  // -------------------------------------------------
-  const CART_KEY = 'surprise_sutra_cart';
 
   const getCart = () => {
-    const raw = localStorage.getItem(CART_KEY);
+    const raw = localStorage.getItem("surprise_sutra_cart");
     return raw ? JSON.parse(raw) : [];
   };
 
@@ -29,7 +27,7 @@ const Navbar = () => {
   const totalItems = cartItems.reduce((sum, i) => sum + i.qty, 0);
 
   const saveCart = (items) => {
-    localStorage.setItem(CART_KEY, JSON.stringify(items));
+    localStorage.setItem("surprise_sutra_cart", JSON.stringify(items));
     setCartItems(items);
     // notify other tabs
     window.dispatchEvent(new Event('cartUpdated'));
@@ -82,7 +80,7 @@ const Navbar = () => {
     const handler = (e) => {
       // Close profile dropdown if clicked outside both desktop and mobile refs
       if (desktopProfileRef.current && !desktopProfileRef.current.contains(e.target) &&
-          mobileProfileRef.current && !mobileProfileRef.current.contains(e.target)) {
+        mobileProfileRef.current && !mobileProfileRef.current.contains(e.target)) {
         setIsProfileOpen(false);
       }
       if (cartRef.current && !cartRef.current.contains(e.target))
@@ -103,16 +101,27 @@ const Navbar = () => {
     {
       name: "Party Supplies",
       subLinks: [
-        { name: "DIY Kits", path: "/party-supplies/diy-kits" },
-        { name: "Themed Party Supplies", path: "/party-supplies/themed" },
+        { name: "DIY Kits", path: "/diy-kits" },
+        {
+          name: "Themed Party Supplies",
+          path: "/party-supplies/themed",
+          subLinks: [
+            { name: "Anniversary", path: "/party-supplies/themed/anniversary" },
+            { name: "Baby Shower", path: "/party-supplies/themed/baby-shower" },
+            { name: "Baby Welcome", path: "/party-supplies/themed/baby-welcome" },
+            { name: "Bachelor/Bachelorette", path: "/party-supplies/themed/bachelor" },
+            { name: "Birthday", path: "/party-supplies/themed/birthday" },
+            { name: "Farewell & Retirement", path: "/party-supplies/themed/farewell-retirement" },
+          ],
+        },
         { name: "Customized Party Supplies", path: "/party-supplies/customized" },
       ],
     },
-    { name: 'Products', path: '/products' },
     { name: 'Gifts', path: '/gifts' },
     { name: 'Services', path: '/services' },
     { name: 'Contact', path: '/contact', isButton: true },
   ];
+
 
   const linkClasses = (path, isButton = false) =>
     isButton
@@ -128,6 +137,7 @@ const Navbar = () => {
   const handleLinkClick = () => {
     setIsOpen(false);
     setIsPartySuppliesOpen(false);
+    setIsThemedOpen(false);
   };
 
   // -------------------------------------------------
@@ -184,17 +194,54 @@ const Navbar = () => {
                     {isPartySuppliesOpen && (
                       <div className="absolute top-full left-0 mt-0 w-52 bg-white rounded-lg shadow-xl border border-amber-500/20 overflow-hidden">
                         {link.subLinks.map((sub) => (
-                          <Link
-                            key={sub.path}
-                            to={sub.path}
-                            className={`block px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${location.pathname === sub.path
-                              ? "bg-amber-100 text-amber-600"
-                              : ""
-                              }`}
-                            onClick={handleLinkClick}
-                          >
-                            {sub.name}
-                          </Link>
+                          <div key={sub.path}>
+                            {sub.subLinks ? (
+                              <>
+                                <button
+                                  onClick={() => setIsThemedOpen(!isThemedOpen)}
+                                  className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${location.pathname === sub.path
+                                    ? "bg-amber-100 text-amber-600"
+                                    : ""
+                                    }`}
+                                >
+                                  <span>{sub.name}</span>
+                                  <ChevronDown
+                                    size={16}
+                                    className={`transition-transform duration-300 ${isThemedOpen ? 'rotate-180' : ''}`}
+                                  />
+                                </button>
+
+                                {isThemedOpen && (
+                                  <div className="pl-4 bg-gray-50">
+                                    {sub.subLinks.map((themed) => (
+                                      <Link
+                                        key={themed.path}
+                                        to={themed.path}
+                                        className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${location.pathname === themed.path
+                                          ? "bg-amber-100 text-amber-600"
+                                          : ""
+                                          }`}
+                                        onClick={handleLinkClick}
+                                      >
+                                        {themed.name}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                )}
+                              </>
+                            ) : (
+                              <Link
+                                to={sub.path}
+                                className={`block px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${location.pathname === sub.path
+                                  ? "bg-amber-100 text-amber-600"
+                                  : ""
+                                  }`}
+                                onClick={handleLinkClick}
+                              >
+                                {sub.name}
+                              </Link>
+                            )}
+                          </div>
                         ))}
                       </div>
                     )}
@@ -373,7 +420,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+          className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
             }`}
         >
           <div className="pb-6 pt-2 space-y-3 bg-gray-100 rounded-2xl px-4 mt-2 shadow-inner">
@@ -399,20 +446,58 @@ const Navbar = () => {
                       </span>
                     </button>
                     {isPartySuppliesOpen && (
-                      <div className="pl-4 space-y-2">
+                      <div className="pl-4 space-y-2 mt-2">
                         {link.subLinks.map((sub) => (
-                          <Link
-                            key={sub.path}
-                            to={sub.path}
-                            className={`block px-4 py-2 text-sm font-medium text-gray-800 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 ${location.pathname === sub.path
-                              ? "bg-amber-100 text-amber-600"
-                              : ""
-                              }`}
-                            onClick={handleLinkClick}
-                            style={{ animationDelay: `${(idx + 1) * 50}ms` }}
-                          >
-                            {sub.name}
-                          </Link>
+                          <div key={sub.path}>
+                            {sub.subLinks ? (
+                              <>
+                                <button
+                                  onClick={() => setIsThemedOpen(!isThemedOpen)}
+                                  className={`w-full text-left flex items-center justify-between px-4 py-2 text-sm font-medium text-gray-800 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${location.pathname === sub.path
+                                    ? "bg-amber-100 text-amber-600"
+                                    : ""
+                                    }`}
+                                  style={{ animationDelay: `${(idx + 1) * 50}ms` }}
+                                >
+                                  <span>{sub.name}</span>
+                                  <ChevronDown
+                                    size={16}
+                                    className={`transition-transform duration-300 ${isThemedOpen ? 'rotate-180' : ''}`}
+                                  />
+                                </button>
+
+                                {isThemedOpen && (
+                                  <div className="pl-4 space-y-1 mt-1">
+                                    {sub.subLinks.map((themed) => (
+                                      <Link
+                                        key={themed.path}
+                                        to={themed.path}
+                                        className={`block px-3 py-2 text-xs font-medium text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${location.pathname === themed.path
+                                          ? "bg-amber-100 text-amber-600"
+                                          : ""
+                                          }`}
+                                        onClick={handleLinkClick}
+                                      >
+                                        {themed.name}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                )}
+                              </>
+                            ) : (
+                              <Link
+                                to={sub.path}
+                                className={`block px-4 py-2 text-sm font-medium text-gray-800 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${location.pathname === sub.path
+                                  ? "bg-amber-100 text-amber-600"
+                                  : ""
+                                  }`}
+                                onClick={handleLinkClick}
+                                style={{ animationDelay: `${(idx + 1) * 50}ms` }}
+                              >
+                                {sub.name}
+                              </Link>
+                            )}
+                          </div>
                         ))}
                       </div>
                     )}

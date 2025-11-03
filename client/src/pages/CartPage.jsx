@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Plus, Minus, X, ShoppingBag, ArrowLeft } from 'lucide-react';
 
-const CART_KEY = 'surprise_sutra_cart';
+const CART_KEY = "surprise_sutra_cart";
 
 const getCart = () => JSON.parse(localStorage.getItem(CART_KEY) || '[]');
 const saveCart = (items) => {
@@ -25,10 +25,15 @@ const CartPage = () => {
         };
     }, []);
 
-    const updateQty = (id, delta) => {
+    // Generate unique key for each cart item
+    const getItemKey = (item) => `${item.productId || item._id}-${item.color || 'none'}-${item.size || 'none'}`;
+
+
+    const updateQty = (item, delta) => {
+        const key = getItemKey(item);
         const updated = cartItems
             .map((i) => {
-                if (i.id === id) {
+                if (getItemKey(i) === key) {
                     const newQty = i.qty + delta;
                     return newQty > 0 ? { ...i, qty: newQty } : null;
                 }
@@ -38,13 +43,18 @@ const CartPage = () => {
         saveCart(updated);
     };
 
-    const removeItem = (id) => {
-        saveCart(cartItems.filter((i) => i.id !== id));
+    const removeItem = (item) => {
+        const key = getItemKey(item);
+        saveCart(cartItems.filter((i) => getItemKey(i) !== key));
     };
 
     const subtotal = cartItems.reduce((sum, i) => {
-        const price = i.variants?.[0]?.price || i.price || 0;
-        return sum + price * i.qty;
+        const variantPrice =
+            Array.isArray(i.variants) && i.variants.length > 0
+                ? i.variants[0].price
+                : 0;
+        const price = i.price || variantPrice || 0;
+        return sum + price * (i.qty || 1);
     }, 0);
 
     const totalItems = cartItems.reduce((s, i) => s + i.qty, 0);
@@ -58,7 +68,7 @@ const CartPage = () => {
                     <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Your cart is empty</h2>
                     <p className="text-gray-600 mb-8">Looks like you haven't added anything yet.</p>
                     <Link
-                        to="/products"
+                        to="/diy-kits"
                         className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-full hover:scale-105 transition-transform text-sm md:text-base"
                     >
                         <ArrowLeft className="w-5 h-5" />
@@ -87,13 +97,23 @@ const CartPage = () => {
                     {/* Cart Items */}
                     <div className="flex-1 space-y-4 md:space-y-6 order-2 lg:order-1">
                         {cartItems.map((item) => {
-                            const variant = item.variants?.[0] || {};
-                            const price = variant.price || item.price || 0;
-                            const image = item.images?.[0]?.src || 'https://via.placeholder.com/120';
+                            const price =
+                                item.price ||
+                                (Array.isArray(item.variants) && item.variants.length > 0
+                                    ? item.variants[0].price
+                                    : 0);
+
+                            const image =
+                                item.image ||
+                                (Array.isArray(item.images) && item.images.length > 0
+                                    ? item.images[0].src.startsWith('http')
+                                        ? item.images[0].src
+                                        : `http://localhost:5005${item.images[0].src}`
+                                    : null);
 
                             return (
                                 <div
-                                    key={item.id}
+                                    key={getItemKey(item)}
                                     className="bg-white rounded-2xl shadow-lg p-4 md:p-6 flex flex-col sm:flex-row gap-4 border border-amber-100 hover:border-amber-300 transition-all"
                                 >
                                     {/* Image */}
@@ -111,9 +131,11 @@ const CartPage = () => {
                                             <h3 className="text-base md:text-lg font-bold text-gray-800 line-clamp-2">
                                                 {item.title}
                                             </h3>
-                                            {variant.option1Value && (
+                                            {(item.color || item.size) && (
                                                 <p className="text-xs md:text-sm text-amber-600 font-medium mt-1">
-                                                    Variant: {variant.option1Value}
+                                                    {item.color && `Color: ${item.color}`}
+                                                    {item.color && item.size && " | "}
+                                                    {item.size && `Size: ${item.size}`}
                                                 </p>
                                             )}
                                             <p className="text-xs md:text-sm text-gray-500 mt-1">
@@ -133,7 +155,7 @@ const CartPage = () => {
                                         <div className="flex items-center justify-between mt-4 sm:mt-0">
                                             <div className="flex items-center gap-2">
                                                 <button
-                                                    onClick={() => updateQty(item.id, -1)}
+                                                    onClick={() => updateQty(item, -1)}
                                                     className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition touch-manipulation"
                                                     aria-label="Decrease quantity"
                                                 >
@@ -143,7 +165,7 @@ const CartPage = () => {
                                                     {item.qty}
                                                 </span>
                                                 <button
-                                                    onClick={() => updateQty(item.id, 1)}
+                                                    onClick={() => updateQty(item, 1)}
                                                     className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition touch-manipulation"
                                                     aria-label="Increase quantity"
                                                 >
@@ -151,7 +173,7 @@ const CartPage = () => {
                                                 </button>
                                             </div>
                                             <button
-                                                onClick={() => removeItem(item.id)}
+                                                onClick={() => removeItem(item)}
                                                 className="text-red-500 hover:text-red-600 flex items-center gap-1 text-sm font-medium"
                                             >
                                                 <X className="w-4 h-4" />
@@ -207,7 +229,7 @@ const CartPage = () => {
                             </button>
 
                             <Link
-                                to="/products"
+                                to="/diy-kits"
                                 className="block text-center mt-4 text-gray-600 hover:text-red-600 font-medium text-sm md:text-base"
                             >
                                 ← Continue Shopping

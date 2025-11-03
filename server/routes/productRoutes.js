@@ -6,7 +6,10 @@ import {
   uploadExcel,
   updateProduct,
   deleteProduct,
+  getProductById,
+  getAllProducts,
 } from "../controllers/product.js";
+import { upload1 } from "../utils/multer.js";
 
 const router = express.Router();
 
@@ -39,7 +42,9 @@ const upload = multer({
 
 // Routes
 router.get("/", getProducts);
-router.post("/", addProduct);
+router.get('/all',getAllProducts)
+router.get('/:id',getProductById)
+router.post("/", upload1.any(), addProduct);
 router.post("/upload", upload.single("file"), uploadExcel);
 router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);

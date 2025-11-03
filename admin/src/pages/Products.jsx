@@ -17,8 +17,8 @@ const ProductTable = () => {
         const fetchProducts = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('http://localhost:5005/api/products');
-                setProducts(response.data);
+                const response = await axios.get('http://localhost:5005/api/products/all');
+                setProducts(response.data?.products);
                 setLoading(false);
             } catch (err) {
                 setError('Failed to fetch products');
@@ -96,7 +96,7 @@ const ProductTable = () => {
                     <span className="ml-2 text-gray-700 font-medium">products per page</span>
                 </div>
                 <Link
-                    to="/products/add"
+                    to="/add-product"
                     className="flex items-center px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-green-600 transition shadow-md"
                 >
                     <Plus size={20} className="mr-2" /> Add Product

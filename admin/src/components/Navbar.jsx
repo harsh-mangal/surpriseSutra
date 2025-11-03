@@ -10,7 +10,7 @@ export default function AdminNavbar() {
     { id: 1, name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard', label: 'Navigate to Dashboard' },
     { id: 2, name: 'Products', icon: Package, path: '/products', label: 'Navigate to Products' },
     { id: 3, name: 'Orders', icon: ShoppingCart, path: '/orders', label: 'Navigate to Orders' },
-    { id: 4, name: 'Settings', icon: Settings, path: '/settings', label: 'Navigate to Settings' },
+    { id: 4, name: 'Categories', icon: Package, path: '/categories', label: 'Navigate to Settings' },
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);

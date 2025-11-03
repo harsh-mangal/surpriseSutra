@@ -1,16 +1,15 @@
 // src/pages/CheckoutPage.jsx
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Check, CreditCard, Package, Truck, Wallet, Plus, MapPin } from 'lucide-react';
+import { ArrowLeft, Check, CreditCard, Package, Truck, Wallet, Plus, MapPin, LogIn } from 'lucide-react';
 import axios from 'axios';
 
-const CART_KEY = 'surprise_sutra_cart';
 const USER_API = 'http://localhost:5005/api/user';
 const ORDER_API = 'http://localhost:5005/api/order';
 
-const getCart = () => JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+const getCart = () => JSON.parse(localStorage.getItem("surprise_sutra_cart") || '[]');
 const saveCart = (items) => {
-  localStorage.setItem(CART_KEY, JSON.stringify(items));
+  localStorage.setItem("surprise_sutra_cart", JSON.stringify(items));
   window.dispatchEvent(new Event('cartUpdated'));
 };
 
@@ -25,7 +24,6 @@ const CheckoutPage = () => {
   const [coupon, setCoupon] = useState('');
   const [discount, setDiscount] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState('cod');
-  const [sameAsBilling, setSameAsBilling] = useState(true);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
   // Manual form fallback
@@ -103,22 +101,33 @@ const CheckoutPage = () => {
     fillAddress(addr, user);
   };
 
-  // Build order items for backend
-  const buildOrderItems = () => {
-    return cartItems.map(item => ({
-      product: item._id,
-      title: item.title,
-      price: item.variants?.[0]?.price || item.price || 0,
-      quantity: item.qty,
-      image: item.images?.[0]?.src || item.image || null,
-    }));
-  };
 
-  const subtotal = cartItems.reduce((sum, i) => {
-    const price = i.variants?.[0]?.price || i.price || 0;
-    return sum + price * i.qty;
-  }, 0);
-  const total = subtotal - discount;
+const buildOrderItems = () => {
+  return cartItems.map(item => {
+    const variant = item.variants?.[0] || {};
+
+    return {
+      product: item.productId || item._id, // REQUIRED
+      title: item.title,
+      price: item.price || variant.price || 0,
+      quantity: item.qty, // REQUIRED
+      image: item.image || item.images?.[0]?.src || null,
+      variant: {
+        option1Value: item.option1Value || item.color || null,
+        option2Value: item.option2Value || item.size || null,
+        sku: item.sku || variant.sku || null
+      }
+    };
+  });
+};
+
+const subtotal = cartItems.reduce(
+  (sum, i) => sum + ((i.price || i.variants?.[0]?.price || 0) * (i.qty || 1)),
+  0
+);
+
+const total = subtotal - (discount || 0);
+
 
   const applyCoupon = () => {
     if (coupon.trim().toUpperCase() === 'SURPRISE10') {
@@ -129,11 +138,10 @@ const CheckoutPage = () => {
     }
   };
 
-  // PLACE ORDER → CALL API
+  // PLACE ORDER
   const placeOrder = async () => {
     let shippingAddress = {};
 
-    // CASE 1: Saved address selected
     if (selectedAddressIndex !== null && addresses[selectedAddressIndex]) {
       const addr = addresses[selectedAddressIndex];
       shippingAddress = {
@@ -145,13 +153,7 @@ const CheckoutPage = () => {
         country: addr.country,
         phone: user?.phone || ''
       };
-    }
-    // CASE 2: No saved address → use manual form
-    else if (addresses.length === 0) {
-      if (!billing.name || !billing.email || !billing.phone || !billing.address) {
-        alert('Please fill all address fields');
-        return;
-      }
+    } else if (addresses.length === 0 && billing.name && billing.email && billing.phone && billing.address) {
       shippingAddress = {
         name: billing.name,
         street: billing.address.split(',')[0]?.trim() || '',
@@ -162,7 +164,7 @@ const CheckoutPage = () => {
         phone: billing.phone
       };
     } else {
-      alert('Please select a delivery address');
+      alert('Please select or enter a delivery address');
       return;
     }
 
@@ -172,6 +174,7 @@ const CheckoutPage = () => {
       shippingAddress,
       paymentMethod,
       shippingPrice: 0,
+      totalAmount: total,
     };
 
     try {
@@ -179,8 +182,7 @@ const CheckoutPage = () => {
       const res = await axios.post(ORDER_API, payload);
       console.log('Order created:', res.data);
 
-      // Clear cart
-      localStorage.removeItem(CART_KEY);
+      localStorage.removeItem("surprise_sutra_cart");
       window.dispatchEvent(new Event('cartUpdated'));
 
       alert(`Order placed successfully! Total: ₹${total.toFixed(2)}`);
@@ -193,6 +195,7 @@ const CheckoutPage = () => {
     }
   };
 
+  // EMPTY CART
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center p-6">
@@ -200,12 +203,43 @@ const CheckoutPage = () => {
           <Package className="w-20 h-20 mx-auto text-gray-400 mb-6" />
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Cart is empty</h2>
           <Link
-            to="/products"
+            to="/diy-kits"
             className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-full hover:scale-105 transition-transform"
           >
             <ArrowLeft className="w-5 h-5" />
             Continue Shopping
           </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // NOT LOGGED IN → SHOW LOGIN PROMPT
+  if (!user || !userId) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-rose-50 to-red-50 flex items-center justify-center p-6">
+        <div className="bg-white rounded-3xl shadow-2xl p-10 md:p-14 text-center max-w-lg w-full">
+          <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-r from-amber-100 to-yellow-100 rounded-full flex items-center justify-center">
+            <LogIn className="w-12 h-12 text-amber-600" />
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
+            Please Login First
+          </h2>
+          <p className="text-gray-600 mb-8">
+            You need to be logged in to proceed with checkout.
+          </p>
+          <button
+            onClick={() => navigate('/login')}
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-4 px-10 rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg"
+          >
+            <LogIn className="w-6 h-6" />
+            Login Now
+          </button>
+          <p className="mt-6 text-sm text-gray-500">
+            <Link to="/cart" className="text-amber-600 cursor-pointer font-medium hover:underline">
+              Go Back To Cart
+            </Link>
+          </p>
         </div>
       </div>
     );
@@ -245,11 +279,10 @@ const CheckoutPage = () => {
                   {addresses.map((addr, i) => (
                     <label
                       key={i}
-                      className={`block p-4 border rounded-xl cursor-pointer transition-all ${
-                        selectedAddressIndex === i
-                          ? 'border-amber-500 bg-amber-50'
-                          : 'border-gray-200 hover:border-amber-300'
-                      }`}
+                      className={`block p-4 border rounded-xl cursor-pointer transition-all ${selectedAddressIndex === i
+                        ? 'border-amber-500 bg-amber-50'
+                        : 'border-gray-200 hover:border-amber-300'
+                        }`}
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex items-start gap-3">
@@ -337,6 +370,7 @@ const CheckoutPage = () => {
             {addresses.length === 0 && !showAddAddress && (
               <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
                 <MapPin className="w-16 h-16 mx-auto text-gray-400 mb-4" />
+                jamming
                 <p className="text-gray-600 mb-4">No saved addresses</p>
                 <button
                   onClick={() => setShowAddAddress(true)}
@@ -423,11 +457,10 @@ const CheckoutPage = () => {
                 ].map((method) => (
                   <label
                     key={method.id}
-                    className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer transition-all ${
-                      paymentMethod === method.id
-                        ? 'border-amber-500 bg-amber-50'
-                        : 'border-gray-200 hover:border-amber-300'
-                    }`}
+                    className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer transition-all ${paymentMethod === method.id
+                      ? 'border-amber-500 bg-amber-50'
+                      : 'border-gray-200 hover:border-amber-300'
+                      }`}
                   >
                     <div className="flex items-center gap-3">
                       <method.icon className="w-6 h-6 text-amber-600" />
@@ -453,12 +486,15 @@ const CheckoutPage = () => {
               <h2 className="text-xl font-bold text-gray-800 mb-4">Order Summary</h2>
 
               <div className="max-h-64 overflow-y-auto mb-4 space-y-2">
-                {cartItems.map((item) => {
-                  const price = item.variants?.[0]?.price || item.price || 0;
+                {cartItems.map((item, idx) => {
+                  const price = item.price || item.variants?.[0]?.price || 0;
+
                   return (
-                    <div key={item._id} className="flex justify-between text-sm">
+                    <div key={idx} className="flex justify-between text-sm">
                       <span className="text-gray-600 truncate max-w-[180px]">
                         {item.title} × {item.qty}
+                        {item.color && ` (${item.color}`}
+                        {item.size && `, ${item.size})`}
                       </span>
                       <span className="font-medium">₹{(price * item.qty).toFixed(2)}</span>
                     </div>

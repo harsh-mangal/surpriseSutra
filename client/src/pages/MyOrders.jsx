@@ -119,7 +119,7 @@ const MyOrdersPage = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-2">No orders yet</h2>
             <p className="text-gray-600 mb-6">Start shopping and track your orders here!</p>
             <Link
-              to="/products"
+              to="/diy-kits"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-full hover:scale-105 transition-transform"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -160,11 +160,15 @@ const MyOrdersPage = () => {
                           <div key={i} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
                             {item.image ? (
                               <img
-                                src={item.image}
+                                src={
+    item.image?.startsWith("http")
+      ? item.image
+      : `http://localhost:5005${item.image}`
+  }
                                 alt={item.title}
                                 className="w-16 h-16 object-cover rounded-lg border border-gray-300"
                                 onError={(e) => {
-                                  e.target.src = '/placeholder.jpg'; 
+                                  e.target.src = '/placeholder.jpg';
                                   e.target.classList.add('bg-gray-200', 'border-dashed');
                                 }}
                               />

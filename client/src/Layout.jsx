@@ -16,6 +16,7 @@ import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/Profile";
 import MyOrdersPage from "./pages/MyOrders";
 import ScrollToTop from "./components/ScrollToTop";
+import ProductDetails from "./pages/ProductDetails";
 
 function Layout() {
   return (
@@ -29,13 +30,14 @@ function Layout() {
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/gifts" element={<Gifts />} />
             <Route path="/contact" element={<ContactUs />} />
-            <Route path="/products" element={<ProductList />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/profile" element={<ProfilePage />} />
              <Route path="/my-orders" element={<MyOrdersPage />} />
+             <Route path="/productdetails/:id" element={<ProductDetails />} />
 
+            <Route path="/diy-kits" element={<ProductList />} />
             <Route path="/party-supplies/themed" element={<ThemedPartySupplies />} />
              <Route path="/party-supplies/customized" element={<CustomizedPartySupplies />} />
           </Routes>

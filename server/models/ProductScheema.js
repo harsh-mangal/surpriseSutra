@@ -1,47 +1,59 @@
 import mongoose from "mongoose";
 
 const variantSchema = new mongoose.Schema({
-  sku: { type: String, default: null },                              // Variant SKU
-  grams: { type: Number, default: 0 },                               // Variant Grams
-  inventoryTracker: { type: String, default: null },                 // shopify / blank
-  inventoryQty: { type: Number, default: 0 },                        // Quantity
-  inventoryPolicy: { type: String, default: null },                  // deny / continue
-  fulfillmentService: { type: String, default: null },               // manual
-  price: { type: Number, default: 0 },                               // Variant Price
-  compareAtPrice: { type: Number, default: null },                   // Compare Price
-  requiresShipping: { type: Boolean, default: true },                // Requires Shipping
-  taxable: { type: Boolean, default: true },                         // Variant Taxable
-  weightUnit: { type: String, default: "g" },                        // Variant Weight Unit
-  variantImage: { type: String, default: null },                     // Variant Image
+  sku: { type: String, default: null },
+  inventoryQty: { type: Number, default: 0 },
+  price: { type: Number, default: 0 },
+  compareAtPrice: { type: Number, default: null },
+  color: { type: String },
+  size: { type: String },
+  option1: { type: String },
+  option2: { type: String },
 });
 
 const imageSchema = new mongoose.Schema({
-  src: { type: String, required: true },                             // Image Src URL
-  position: { type: Number, default: 1 },                            // Image order
-  altText: { type: String, default: null },                          // Alt text
+  src: { type: String, required: true },
+  position: { type: Number, default: 1 },
+});
+
+const variantImageSchema = new mongoose.Schema({
+  variant: { type: String, required: true },
+  images: [imageSchema],
 });
 
 const productSchema = new mongoose.Schema(
   {
-    handle: { type: String, required: true, unique: true },          // Handle
-    title: { type: String, required: true },                         // Product Title
-    description: { type: String, default: null },                    // Body (HTML)
-    vendor: { type: String, default: null },                         // Vendor
-    productCategory: { type: String, default: null },                // Product Category
-    type: { type: String, default: null },                           // Type
-    tags: [{ type: String }],                                        // Tags
-    published: { type: Boolean, default: true },                     // Published
-    option1Name: { type: String, default: null },                    // Option1 Name
-    option1Value: { type: String, default: null },                   // Option1 Value
-    giftCard: { type: Boolean, default: false },                     // Gift Card
-    seo: {
-      title: { type: String, default: null },                        // SEO Title
-      description: { type: String, default: null },                  // SEO Description
+    title: { type: String, required: true },
+    handle: { type: String, unique: true, sparse: true },
+    description: { type: String },
+    vendor: { type: String, default: "Surprise Sutra" },
+    productCategory: { type: String },
+    type: { type: String },
+    tags: [{ type: String }],
+    published: { type: Boolean, default: false },
+    giftCard: { type: Boolean, default: false },
+    option1Name: { type: String, default: "Color" },
+    option2Name: { type: String, default: "Size" },
+    seo: { title: { type: String }, description: { type: String } },
+    images: [imageSchema],
+    variantImages: [variantImageSchema], // ← CHANGED
+    variants: [variantSchema],
+    colors: [
+      {
+        id: { type: String, required: true },
+        name: { type: String, required: true },
+        hex: { type: String, required: true },
+        sizes: [{ type: String }],
+      },
+    ],
+    termsAndConditions: { type: String },
+    boxContents: { type: String },
+    includedIndia: { type: Boolean, default: false },
+    status: {
+      type: String,
+      enum: ["active", "draft", "archived"],
+      default: "draft",
     },
-    images: [imageSchema],                                           // Product Images
-    variants: [variantSchema],                                       // Product Variants
-    includedIndia: { type: Boolean, default: false },                // Included / India
-    status: { type: String, enum: ["active", "draft", "archived"], default: "active" }, // Status
   },
   { timestamps: true }
 );
