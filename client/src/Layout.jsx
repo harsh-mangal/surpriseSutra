@@ -17,6 +17,7 @@ import ProfilePage from "./pages/Profile";
 import MyOrdersPage from "./pages/MyOrders";
 import ScrollToTop from "./components/ScrollToTop";
 import ProductDetails from "./pages/ProductDetails";
+import RegisterForm from "./pages/Register";
 
 function Layout() {
   return (
@@ -33,6 +34,7 @@ function Layout() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/login" element={<LoginPage />} />
+             <Route path="/register" element={<RegisterForm />} />
             <Route path="/profile" element={<ProfilePage />} />
              <Route path="/my-orders" element={<MyOrdersPage />} />
              <Route path="/productdetails/:id" element={<ProductDetails />} />

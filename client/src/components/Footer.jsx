@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="flex-1 flex flex-col space-y-6 pl-2">
           <div className="flex items-center space-x-3">
             <img
-              src="https://ik.imagekit.io/sqpcbo0c0/Surprise%20Sutra/ChatGPT_Image_Oct_14__2025__05_14_06_PM-removebg-preview.png?updatedAt=1760442286996"
+              src="https://ik.imagekit.io/tdlebsr5e/surprisesutralogopng?updatedAt=1762244410560"
               alt="Surprise Sutra Logo"
               className="w-42 h-28 object-contain ml-2"
             />
