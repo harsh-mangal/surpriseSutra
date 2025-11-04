@@ -162,7 +162,7 @@ const Navbar = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-rose-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <img
-              src="https://ik.imagekit.io/sqpcbo0c0/Surprise%20Sutra/ChatGPT_Image_Oct_14__2025__05_14_06_PM-removebg-preview.png?updatedAt=1760442286996"
+              src="https://ik.imagekit.io/tdlebsr5e/surprisesutralogopng?updatedAt=1762244410560"
               alt="Surprise Sutra Logo"
               className="relative h-20 lg:h-24 w-auto p-1 transition-transform duration-300 group-hover:scale-105"
             />

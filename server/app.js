@@ -23,7 +23,7 @@ app.use('/api/category',categoryRoutes)
 
 // DB Connection
 mongoose
-    .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/surprisesutra")
+    .connect(process.env.MONGO_URI || "mongodb+srv://dodun:dodun@dodun.cqitb.mongodb.net/suprisesutra?appName=Dodun")
     .then(() => console.log("✅ MongoDB Connected"))
     .catch((err) => console.log("MongoDB Error:", err));
 
