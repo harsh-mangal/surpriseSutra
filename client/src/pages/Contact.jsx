@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
-import { Phone, Mail } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Phone, Mail } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 const QuickQuoteSection = () => {
   const location = useLocation();
 
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    occasion: '',
-    date: '',
-    message: ''
+    name: "",
+    phone: "",
+    email: "",
+    occasion: "",
+    date: "",
+    message: "",
   });
 
   // ✅ Prefill the occasion from navigation state
@@ -19,36 +19,36 @@ const QuickQuoteSection = () => {
     if (location.state?.occasion) {
       setFormData((prev) => ({
         ...prev,
-        occasion: location.state.occasion
+        occasion: location.state.occasion,
       }));
     }
   }, [location.state]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you! We will contact you soon.');
+    console.log("Form submitted:", formData);
+    alert("Thank you! We will contact you soon.");
   };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   return (
     <section id="contact" className="py-20 ">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto ">
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
-          
           {/* Left Content */}
           <div className="md:w-1/2 p-8 md:p-12 bg-gradient-to-br from-yellow-100 to-red-100 flex flex-col justify-center">
             <h2 className="text-4xl md:text-5xl font-bold text-red-700 mb-4">
               Get Your <span className="text-yellow-500">Free Quote</span>
             </h2>
             <p className="text-xl text-gray-700 mb-6">
-              Tell us about your event and we'll create magic! From birthdays to anniversaries, we make your special moments unforgettable.
+              Tell us about your event and we'll create magic! From birthdays to
+              anniversaries, we make your special moments unforgettable.
             </p>
 
             <div className="space-y-6 mt-6">
@@ -58,7 +58,9 @@ const QuickQuoteSection = () => {
                 </div>
                 <div>
                   <p className="text-gray-600 text-sm">Call Us Now</p>
-                  <p className="font-bold text-red-700 text-lg">+91 9999416896</p>
+                  <p className="font-bold text-red-700 text-lg">
+                    +91 9999416896
+                  </p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
@@ -67,7 +69,9 @@ const QuickQuoteSection = () => {
                 </div>
                 <div>
                   <p className="text-gray-600 text-sm">Email Us</p>
-                  <p className="font-bold text-red-700 text-lg">surprisesutra@gmail.com</p>
+                  <p className="font-bold text-red-700 text-lg">
+                    surprisesutra@gmail.com
+                  </p>
                 </div>
               </div>
             </div>
@@ -77,7 +81,7 @@ const QuickQuoteSection = () => {
           <div className="md:w-1/2 p-8 md:p-12">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-6">
-                <input 
+                <input
                   type="text"
                   name="name"
                   value={formData.name}
@@ -86,7 +90,7 @@ const QuickQuoteSection = () => {
                   className="w-full px-6 py-4 rounded-xl border-2 border-gray-300 focus:border-red-600 focus:outline-none text-lg"
                   required
                 />
-                <input 
+                <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
@@ -97,7 +101,7 @@ const QuickQuoteSection = () => {
                 />
               </div>
 
-              <input 
+              <input
                 type="email"
                 name="email"
                 value={formData.email}
@@ -108,7 +112,7 @@ const QuickQuoteSection = () => {
               />
 
               {/* Occasion Dropdown (auto-selects if state passed) */}
-              <select 
+              <select
                 name="occasion"
                 value={formData.occasion}
                 onChange={handleChange}
@@ -124,7 +128,7 @@ const QuickQuoteSection = () => {
                 <option value="Custom Events">Custom Events</option>
               </select>
 
-              <input 
+              <input
                 type="date"
                 name="date"
                 value={formData.date}
@@ -133,7 +137,7 @@ const QuickQuoteSection = () => {
                 required
               />
 
-              <textarea 
+              <textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
@@ -142,7 +146,7 @@ const QuickQuoteSection = () => {
                 className="w-full px-6 py-4 rounded-xl border-2 border-gray-300 focus:border-red-600 focus:outline-none text-lg resize-none"
               ></textarea>
 
-              <button 
+              <button
                 type="submit"
                 className="w-full bg-red-600 text-white py-4 rounded-xl font-bold text-xl hover:bg-red-700 transition duration-300 shadow-lg hover:shadow-xl"
               >
@@ -150,7 +154,6 @@ const QuickQuoteSection = () => {
               </button>
             </form>
           </div>
-
         </div>
       </div>
     </section>

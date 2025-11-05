@@ -18,6 +18,11 @@ import MyOrdersPage from "./pages/MyOrders";
 import ScrollToTop from "./components/ScrollToTop";
 import ProductDetails from "./pages/ProductDetails";
 import RegisterForm from "./pages/Register";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
+import RefundPolicy from "./pages/RefundPolicy";
+import ShippingPolicy from "./pages/ShippingPolicy";
+import Faqs from "./pages/Faqs";
 
 function Layout() {
   return (
@@ -28,20 +33,30 @@ function Layout() {
         <main className="flex-1 bg-gray-100">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-and-conditions" element={<TermsConditions />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/shipping-policy" element={<ShippingPolicy />} />
+            <Route path="/faqs" element={<Faqs />} />;
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/gifts" element={<Gifts />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/login" element={<LoginPage />} />
-             <Route path="/register" element={<RegisterForm />} />
+            <Route path="/register" element={<RegisterForm />} />
             <Route path="/profile" element={<ProfilePage />} />
-             <Route path="/my-orders" element={<MyOrdersPage />} />
-             <Route path="/productdetails/:id" element={<ProductDetails />} />
-
+            <Route path="/my-orders" element={<MyOrdersPage />} />
+            <Route path="/productdetails/:id" element={<ProductDetails />} />
             <Route path="/diy-kits" element={<ProductList />} />
-            <Route path="/party-supplies/themed" element={<ThemedPartySupplies />} />
-             <Route path="/party-supplies/customized" element={<CustomizedPartySupplies />} />
+            <Route
+              path="/party-supplies/themed"
+              element={<ThemedPartySupplies />}
+            />
+            <Route
+              path="/party-supplies/customized"
+              element={<CustomizedPartySupplies />}
+            />
           </Routes>
         </main>
         <Footer />
