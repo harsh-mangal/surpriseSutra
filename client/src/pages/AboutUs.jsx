@@ -41,9 +41,7 @@ const AboutSection = () => {
             </p>
 
             {/* Address added here */}
-            <p className="text-lg text-gray-800 font-semibold mt-4">
-              Address: <span className="text-gray-900 font-bold">First Floor/D-32/New Multan Nagar</span>
-            </p>
+        
 
             <div className="grid grid-cols-2 gap-6 pt-4">
               <div className="bg-yellow-50 p-6 rounded-xl border-2 border-yellow-400 hover:scale-105 transition-transform duration-300 shadow-md">

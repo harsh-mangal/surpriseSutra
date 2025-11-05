@@ -233,83 +233,69 @@ const AboutUs = () => {
           </div>
 
           {/* Contact & Service Area */}
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-            {/* Contact Info */}
-            <div className="bg-white/5 backdrop-blur-lg rounded-3xl p-6 md:p-10 shadow-2xl hover:shadow-3xl transition-all duration-300 border border-white/10">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="bg-gradient-to-br from-red-600 to-red-700 p-3 rounded-2xl border border-red-500/40">
-                  <Heart className="text-yellow-400" size={28} />
-                </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-white">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section Heading */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 mb-3">
+                <Heart className="text-red-500 w-6 h-6" />
+                <h3 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-yellow-500">
                   Get in Touch
                 </h3>
               </div>
+              <p className="text-gray-600 text-base sm:text-lg">
+                We’re here to help you bring your celebrations to life 🎉
+              </p>
+            </div>
 
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4 p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-colors border border-white/10">
-                  <Phone
-                    className="text-yellow-400 flex-shrink-0 mt-1"
-                    size={24}
-                  />
-                  <div>
-                    <p className="text-sm text-gray-400 mb-1">Call Us</p>
-                    <p className="text-lg md:text-xl font-bold text-white">
-                      +91 9876543210
-                    </p>
+            {/* 3 Column Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {/* Phone Card */}
+              <div className="bg-white border border-yellow-200 rounded-3xl p-6 sm:p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <div className="bg-gradient-to-br from-yellow-400 to-red-500 p-4 rounded-2xl shadow-lg">
+                    <Phone className="w-6 h-6 text-white" />
                   </div>
-                </div>
-
-                <div className="flex items-start space-x-4 p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-colors border border-white/10">
-                  <Mail
-                    className="text-yellow-400 flex-shrink-0 mt-1"
-                    size={24}
-                  />
-                  <div>
-                    <p className="text-sm text-gray-400 mb-1">Email Us</p>
-                    <p className="text-lg md:text-xl font-bold text-white">
-                      info@surprisesutra.com
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4 p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-colors border border-white/10">
-                  <MapPin
-                    className="text-yellow-400 flex-shrink-0 mt-1"
-                    size={24}
-                  />
-                  <div>
-                    <p className="text-sm text-gray-400 mb-1">Visit Us</p>
-                    <p className="text-base md:text-lg font-semibold text-gray-100">
-                      First Floor, D-32, New Multan Nagar, Delhi, India
-                    </p>
-                  </div>
-                </div>
-
-                {/* Service Area Badge */}
-                <div className="relative overflow-hidden bg-gradient-to-r from-yellow-50 via-white to-yellow-50 text-black p-6 md:p-8 rounded-2xl border border-yellow-400/40 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-100/20 to-transparent pointer-events-none rounded-2xl" />
-                  <p className="text-sm font-semibold mb-3 flex items-center space-x-2 relative z-10">
-                    <MapPin size={20} className="text-yellow-500" />
-                    <span className="text-gray-700">Service Coverage Area</span>
-                  </p>
-                  <p className="text-xl md:text-2xl font-extrabold tracking-tight relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-yellow-800">
-                    Delhi • Noida • Gurgaon • Ghaziabad • Faridabad
+                  <h4 className="text-xl font-bold text-gray-900">Call Us</h4>
+                  <p className="text-gray-500 text-sm">Available Mon–Sat</p>
+                  <p className="text-lg font-semibold text-red-600 hover:text-yellow-500 transition">
+                    +91 98765 43210
                   </p>
                 </div>
               </div>
-            </div>
 
-            {/* Map */}
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-yellow-400 hover:border-red-600 transition-colors duration-300 h-full min-h-[400px] lg:min-h-[600px] bg-black">
-              <iframe
-                title="Surprise Sutra Map"
-                src="https://www.google.com/maps?q=First+Floor,+D-32,+New+Multan+Nagar,+Delhi&output=embed"
-                width="100%"
-                height="100%"
-                className="absolute inset-0 border-0"
-                allowFullScreen
-                loading="lazy"
-              />
+              {/* Email Card */}
+              <div className="bg-white border border-yellow-200 rounded-3xl p-6 sm:p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <div className="bg-gradient-to-br from-yellow-400 to-red-500 p-4 rounded-2xl shadow-lg">
+                    <Mail className="w-6 h-6 text-white" />
+                  </div>
+                  <h4 className="text-xl font-bold text-gray-900">Email Us</h4>
+                  <p className="text-gray-500 text-sm">
+                    We respond within 24 hrs
+                  </p>
+                  <p className="text-lg font-semibold text-red-600 hover:text-yellow-500 transition">
+                    info@surprisesutra.com
+                  </p>
+                </div>
+              </div>
+
+              {/* Service Area Card */}
+              <div className="relative bg-gradient-to-r from-yellow-50 via-white to-red-50 border border-yellow-300 rounded-3xl p-6 sm:p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-100/30 via-transparent to-red-100/20 pointer-events-none rounded-3xl" />
+                <div className="relative flex flex-col items-center text-center space-y-3">
+                  <div className="bg-gradient-to-br from-yellow-400 to-red-500 p-4 rounded-2xl shadow-lg">
+                    <MapPin className="w-6 h-6 text-white" />
+                  </div>
+                  <h4 className="text-xl font-bold text-gray-900">
+                    Service Areas
+                  </h4>
+                  <p className="text-gray-600 text-sm">We proudly serve:</p>
+                  <p className="text-lg font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-yellow-500">
+                    Delhi • Noida • Gurgaon <br />
+                    Ghaziabad • Faridabad
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

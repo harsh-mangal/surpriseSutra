@@ -1,8 +1,14 @@
 // src/components/Navbar.jsx
-import { useState, useEffect, useRef } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Sparkles, ShoppingCart, User, ChevronDown } from 'lucide-react';
-
+import { useState, useEffect, useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Menu,
+  X,
+  Sparkles,
+  ShoppingCart,
+  User,
+  ChevronDown,
+} from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,10 +18,8 @@ const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isThemedOpen, setIsThemedOpen] = useState(false);
 
-
   const location = useLocation();
   const navigate = useNavigate();
-
 
   const getCart = () => {
     const raw = localStorage.getItem("surprise_sutra_cart");
@@ -30,7 +34,7 @@ const Navbar = () => {
     localStorage.setItem("surprise_sutra_cart", JSON.stringify(items));
     setCartItems(items);
     // notify other tabs
-    window.dispatchEvent(new Event('cartUpdated'));
+    window.dispatchEvent(new Event("cartUpdated"));
   };
 
   const addToCart = (product) => {
@@ -52,11 +56,11 @@ const Navbar = () => {
   // Keep cart in sync across tabs
   useEffect(() => {
     const handler = () => setCartItems(getCart());
-    window.addEventListener('storage', handler);
-    window.addEventListener('cartUpdated', handler);
+    window.addEventListener("storage", handler);
+    window.addEventListener("cartUpdated", handler);
     return () => {
-      window.removeEventListener('storage', handler);
-      window.removeEventListener('cartUpdated', handler);
+      window.removeEventListener("storage", handler);
+      window.removeEventListener("cartUpdated", handler);
     };
   }, []);
 
@@ -65,8 +69,8 @@ const Navbar = () => {
   // -------------------------------------------------
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // -------------------------------------------------
@@ -79,15 +83,19 @@ const Navbar = () => {
   useEffect(() => {
     const handler = (e) => {
       // Close profile dropdown if clicked outside both desktop and mobile refs
-      if (desktopProfileRef.current && !desktopProfileRef.current.contains(e.target) &&
-        mobileProfileRef.current && !mobileProfileRef.current.contains(e.target)) {
+      if (
+        desktopProfileRef.current &&
+        !desktopProfileRef.current.contains(e.target) &&
+        mobileProfileRef.current &&
+        !mobileProfileRef.current.contains(e.target)
+      ) {
         setIsProfileOpen(false);
       }
       if (cartRef.current && !cartRef.current.contains(e.target))
         setIsCartOpen(false);
     };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -108,31 +116,44 @@ const Navbar = () => {
           subLinks: [
             { name: "Anniversary", path: "/party-supplies/themed/anniversary" },
             { name: "Baby Shower", path: "/party-supplies/themed/baby-shower" },
-            { name: "Baby Welcome", path: "/party-supplies/themed/baby-welcome" },
-            { name: "Bachelor/Bachelorette", path: "/party-supplies/themed/bachelor" },
+            {
+              name: "Baby Welcome",
+              path: "/party-supplies/themed/baby-welcome",
+            },
+            {
+              name: "Bachelor/Bachelorette",
+              path: "/party-supplies/themed/bachelor",
+            },
             { name: "Birthday", path: "/party-supplies/themed/birthday" },
-            { name: "Farewell & Retirement", path: "/party-supplies/themed/farewell-retirement" },
+            {
+              name: "Farewell & Retirement",
+              path: "/party-supplies/themed/farewell-retirement",
+            },
           ],
         },
-        { name: "Customized Party Supplies", path: "/party-supplies/customized" },
+        {
+          name: "Customized Party Supplies",
+          path: "/party-supplies/customized",
+        },
       ],
     },
-    { name: 'Gifts', path: '/gifts' },
-    { name: 'Services', path: '/services' },
-    { name: 'Contact', path: '/contact', isButton: true },
-  ];
+    { name: "Gifts", path: "/gifts" },
 
+    { name: "Contact", path: "/contact", isButton: true },
+  ];
 
   const linkClasses = (path, isButton = false) =>
     isButton
-      ? `group relative px-6 py-2 lg:px-8 lg:py-3 rounded-full font-semibold text-white transition-all duration-300 overflow-hidden ${location.pathname === path
-        ? "bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-900 shadow-lg"
-        : "bg-gradient-to-r from-red-500 to-rose-500 hover:shadow-xl hover:scale-105"
-      }`
-      : `relative font-semibold text-base transition-all duration-300 group ${location.pathname === path
-        ? "text-transparent bg-gradient-to-r from-amber-500 to-yellow-400 bg-clip-text"
-        : "text-gray-700 hover:text-gray-900"
-      }`;
+      ? `group relative px-6 py-2 lg:px-8 lg:py-3 rounded-full font-semibold text-white transition-all duration-300 overflow-hidden ${
+          location.pathname === path
+            ? "bg-gradient-to-r from-amber-400 to-yellow-400 text-gray-900 shadow-lg"
+            : "bg-gradient-to-r from-red-500 to-rose-500 hover:shadow-xl hover:scale-105"
+        }`
+      : `relative font-semibold text-base transition-all duration-300 group ${
+          location.pathname === path
+            ? "text-transparent bg-gradient-to-r from-amber-500 to-yellow-400 bg-clip-text"
+            : "text-gray-700 hover:text-gray-900"
+        }`;
 
   const handleLinkClick = () => {
     setIsOpen(false);
@@ -145,10 +166,11 @@ const Navbar = () => {
   // -------------------------------------------------
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all duration-500 ${scrolled
-        ? "bg-gray-100/95 backdrop-blur-md shadow-2xl"
-        : "bg-gradient-to-r from-white via-gray-50 to-white shadow-lg"
-        }`}
+      className={`sticky top-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-gray-100/95 backdrop-blur-md shadow-2xl"
+          : "bg-gradient-to-r from-white via-gray-50 to-white shadow-lg"
+      }`}
     >
       {/* Gradient border */}
       <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-70"></div>
@@ -174,8 +196,12 @@ const Navbar = () => {
               <div
                 key={link.path || link.name}
                 className="relative"
-                onMouseEnter={() => link.subLinks && setIsPartySuppliesOpen(true)}
-                onMouseLeave={() => link.subLinks && setIsPartySuppliesOpen(false)}
+                onMouseEnter={() =>
+                  link.subLinks && setIsPartySuppliesOpen(true)
+                }
+                onMouseLeave={() =>
+                  link.subLinks && setIsPartySuppliesOpen(false)
+                }
               >
                 {link.subLinks ? (
                   <>
@@ -184,10 +210,11 @@ const Navbar = () => {
                         {link.name}
                       </span>
                       <span
-                        className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-500 to-yellow-400 transform origin-left transition-transform duration-300 ${location.pathname.startsWith("/party-supplies")
-                          ? "scale-x-100"
-                          : "scale-x-0 group-hover:scale-x-100"
-                          }`}
+                        className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-500 to-yellow-400 transform origin-left transition-transform duration-300 ${
+                          location.pathname.startsWith("/party-supplies")
+                            ? "scale-x-100"
+                            : "scale-x-0 group-hover:scale-x-100"
+                        }`}
                       ></span>
                     </div>
 
@@ -199,15 +226,18 @@ const Navbar = () => {
                               <>
                                 <button
                                   onClick={() => setIsThemedOpen(!isThemedOpen)}
-                                  className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${location.pathname === sub.path
-                                    ? "bg-amber-100 text-amber-600"
-                                    : ""
-                                    }`}
+                                  className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${
+                                    location.pathname === sub.path
+                                      ? "bg-amber-100 text-amber-600"
+                                      : ""
+                                  }`}
                                 >
                                   <span>{sub.name}</span>
                                   <ChevronDown
                                     size={16}
-                                    className={`transition-transform duration-300 ${isThemedOpen ? 'rotate-180' : ''}`}
+                                    className={`transition-transform duration-300 ${
+                                      isThemedOpen ? "rotate-180" : ""
+                                    }`}
                                   />
                                 </button>
 
@@ -217,10 +247,11 @@ const Navbar = () => {
                                       <Link
                                         key={themed.path}
                                         to={themed.path}
-                                        className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${location.pathname === themed.path
-                                          ? "bg-amber-100 text-amber-600"
-                                          : ""
-                                          }`}
+                                        className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${
+                                          location.pathname === themed.path
+                                            ? "bg-amber-100 text-amber-600"
+                                            : ""
+                                        }`}
                                         onClick={handleLinkClick}
                                       >
                                         {themed.name}
@@ -232,10 +263,11 @@ const Navbar = () => {
                             ) : (
                               <Link
                                 to={sub.path}
-                                className={`block px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${location.pathname === sub.path
-                                  ? "bg-amber-100 text-amber-600"
-                                  : ""
-                                  }`}
+                                className={`block px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${
+                                  location.pathname === sub.path
+                                    ? "bg-amber-100 text-amber-600"
+                                    : ""
+                                }`}
                                 onClick={handleLinkClick}
                               >
                                 {sub.name}
@@ -255,10 +287,11 @@ const Navbar = () => {
                     {!link.isButton && (
                       <>
                         <span
-                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-500 to-yellow-400 transform origin-left transition-transform duration-300 ${location.pathname === link.path
-                            ? "scale-x-100"
-                            : "scale-x-0 group-hover:scale-x-100"
-                            }`}
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-500 to-yellow-400 transform origin-left transition-transform duration-300 ${
+                            location.pathname === link.path
+                              ? "scale-x-100"
+                              : "scale-x-0 group-hover:scale-x-100"
+                          }`}
                         ></span>
                         <span
                           className={`text-black hover:text-amber-600 transition-colors duration-200`}
@@ -302,7 +335,9 @@ const Navbar = () => {
                 <User size={24} />
                 <ChevronDown
                   size={16}
-                  className={`transition-transform ${isProfileOpen ? "rotate-180" : ""}`}
+                  className={`transition-transform ${
+                    isProfileOpen ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
@@ -346,7 +381,7 @@ const Navbar = () => {
             <button
               onClick={() => {
                 setIsOpen(false);
-                navigate('/cart');
+                navigate("/cart");
               }}
               className="relative p-2 text-black hover:text-amber-600"
             >
@@ -420,8 +455,9 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
-            }`}
+          className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
+            isOpen ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
+          }`}
         >
           <div className="pb-6 pt-2 space-y-3 bg-gray-100 rounded-2xl px-4 mt-2 shadow-inner">
             {navLinks.map((link, idx) => (
@@ -429,7 +465,9 @@ const Navbar = () => {
                 {link.subLinks ? (
                   <>
                     <button
-                      onClick={() => setIsPartySuppliesOpen(!isPartySuppliesOpen)}
+                      onClick={() =>
+                        setIsPartySuppliesOpen(!isPartySuppliesOpen)
+                      }
                       className={`w-full text-left block ${linkClasses(
                         "/party-supplies"
                       )} py-3 px-4 rounded-lg text-black hover:text-amber-600 hover:bg-amber-50`}
@@ -438,8 +476,9 @@ const Navbar = () => {
                       <span className="flex items-center justify-between">
                         {link.name}
                         <span
-                          className={`transform transition-transform duration-300 ${isPartySuppliesOpen ? "rotate-180" : ""
-                            }`}
+                          className={`transform transition-transform duration-300 ${
+                            isPartySuppliesOpen ? "rotate-180" : ""
+                          }`}
                         >
                           ▼
                         </span>
@@ -453,16 +492,21 @@ const Navbar = () => {
                               <>
                                 <button
                                   onClick={() => setIsThemedOpen(!isThemedOpen)}
-                                  className={`w-full text-left flex items-center justify-between px-4 py-2 text-sm font-medium text-gray-800 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${location.pathname === sub.path
-                                    ? "bg-amber-100 text-amber-600"
-                                    : ""
-                                    }`}
-                                  style={{ animationDelay: `${(idx + 1) * 50}ms` }}
+                                  className={`w-full text-left flex items-center justify-between px-4 py-2 text-sm font-medium text-gray-800 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${
+                                    location.pathname === sub.path
+                                      ? "bg-amber-100 text-amber-600"
+                                      : ""
+                                  }`}
+                                  style={{
+                                    animationDelay: `${(idx + 1) * 50}ms`,
+                                  }}
                                 >
                                   <span>{sub.name}</span>
                                   <ChevronDown
                                     size={16}
-                                    className={`transition-transform duration-300 ${isThemedOpen ? 'rotate-180' : ''}`}
+                                    className={`transition-transform duration-300 ${
+                                      isThemedOpen ? "rotate-180" : ""
+                                    }`}
                                   />
                                 </button>
 
@@ -472,10 +516,11 @@ const Navbar = () => {
                                       <Link
                                         key={themed.path}
                                         to={themed.path}
-                                        className={`block px-3 py-2 text-xs font-medium text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${location.pathname === themed.path
-                                          ? "bg-amber-100 text-amber-600"
-                                          : ""
-                                          }`}
+                                        className={`block px-3 py-2 text-xs font-medium text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${
+                                          location.pathname === themed.path
+                                            ? "bg-amber-100 text-amber-600"
+                                            : ""
+                                        }`}
                                         onClick={handleLinkClick}
                                       >
                                         {themed.name}
@@ -487,12 +532,15 @@ const Navbar = () => {
                             ) : (
                               <Link
                                 to={sub.path}
-                                className={`block px-4 py-2 text-sm font-medium text-gray-800 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${location.pathname === sub.path
-                                  ? "bg-amber-100 text-amber-600"
-                                  : ""
-                                  }`}
+                                className={`block px-4 py-2 text-sm font-medium text-gray-800 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${
+                                  location.pathname === sub.path
+                                    ? "bg-amber-100 text-amber-600"
+                                    : ""
+                                }`}
                                 onClick={handleLinkClick}
-                                style={{ animationDelay: `${(idx + 1) * 50}ms` }}
+                                style={{
+                                  animationDelay: `${(idx + 1) * 50}ms`,
+                                }}
                               >
                                 {sub.name}
                               </Link>
@@ -505,9 +553,13 @@ const Navbar = () => {
                 ) : (
                   <Link
                     to={link.path}
-                    className={`block ${linkClasses(link.path, link.isButton)} ${!link.isButton &&
+                    className={`block ${linkClasses(
+                      link.path,
+                      link.isButton
+                    )} ${
+                      !link.isButton &&
                       "py-3 px-4 rounded-lg text-black hover:text-amber-600 hover:bg-amber-50"
-                      }`}
+                    }`}
                     onClick={handleLinkClick}
                     style={{ animationDelay: `${idx * 50}ms` }}
                   >
@@ -532,7 +584,9 @@ const Navbar = () => {
             {/* Mobile Cart */}
             {isCartOpen && (
               <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Cart</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Cart
+                </h3>
                 {cartItems.length === 0 ? (
                   <p className="text-gray-500">Empty</p>
                 ) : (
