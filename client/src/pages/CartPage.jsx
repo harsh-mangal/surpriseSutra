@@ -108,7 +108,7 @@ const CartPage = () => {
                                 (Array.isArray(item.images) && item.images.length > 0
                                     ? item.images[0].src.startsWith('http')
                                         ? item.images[0].src
-                                        : `http://localhost:5005${item.images[0].src}`
+                                        : `https://apisurprise.dodunsoftsolutions.com${item.images[0].src}`
                                     : null);
 
                             return (

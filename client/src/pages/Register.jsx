@@ -52,7 +52,7 @@ const RegisterPage = () => {
     setError("");
 
     try {
-      const { data } = await axios.post("http://localhost:5005/api/user/register", {
+      const { data } = await axios.post("https://apisurprise.dodunsoftsolutions.com/api/user/register", {
         name: form.name,
         email: form.email,
         password: form.password,

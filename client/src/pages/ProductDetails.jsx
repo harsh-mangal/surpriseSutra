@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { FileText, Gift, Scale, Tags } from "lucide-react";
 
-const API_BASE = "http://localhost:5005";
+const API_BASE = "https://apisurprise.dodunsoftsolutions.com";
 
 const ProductDetails = () => {
   const { id } = useParams();

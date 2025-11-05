@@ -18,7 +18,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 /* ----------------------------- Config ----------------------------- */
-const API_BASE = "http://localhost:5005";
+const API_BASE = "https://apisurprise.dodunsoftsolutions.com";
 const PRODUCTS_PER_PAGE = 16;
 
 /* --------------------------- Small hooks --------------------------- */

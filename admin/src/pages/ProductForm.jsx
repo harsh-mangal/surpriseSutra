@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Plus, Trash2, X, Upload, Package } from "lucide-react";
 
-const API_BASE = "http://localhost:5005/api";
+const API_BASE = "https://apisurprise.dodunsoftsolutions.com/api";
 
 const ProductAddForm = () => {
   const [categories, setCategories] = useState([]);

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Package, Truck, CheckCircle, XCircle, Clock, Search, Filter } from 'lucide-react';
 import axios from 'axios';
 
-const ORDER_API = 'http://localhost:5005/api/order';
+const ORDER_API = 'https://apisurprise.dodunsoftsolutions.com/api/order';
 
 const AdminOrdersPage = () => {
   const [orders, setOrders] = useState([]);

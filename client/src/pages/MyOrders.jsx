@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Package, Truck, CheckCircle, Clock, AlertCircle, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
 
-const ORDER_API = 'http://localhost:5005/api/order';
+const ORDER_API = 'https://apisurprise.dodunsoftsolutions.com/api/order';
 
 const MyOrdersPage = () => {
   const navigate = useNavigate();
@@ -163,7 +163,7 @@ const MyOrdersPage = () => {
                                 src={
     item.image?.startsWith("http")
       ? item.image
-      : `http://localhost:5005${item.image}`
+      : `https://apisurprise.dodunsoftsolutions.com${item.image}`
   }
                                 alt={item.title}
                                 className="w-16 h-16 object-cover rounded-lg border border-gray-300"

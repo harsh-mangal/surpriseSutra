@@ -28,5 +28,5 @@ mongoose
     .catch((err) => console.log("MongoDB Error:", err));
 
 // Start Server
-const PORT = process.env.PORT || 5005;
+const PORT = process.env.PORT || 3043;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

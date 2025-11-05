@@ -17,7 +17,7 @@ const ProductTable = () => {
         const fetchProducts = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('http://localhost:5005/api/products/all');
+                const response = await axios.get('https://apisurprise.dodunsoftsolutions.com/api/products/all');
                 setProducts(response.data?.products);
                 setLoading(false);
             } catch (err) {
@@ -55,7 +55,7 @@ const ProductTable = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
             try {
-                await axios.delete(`http://localhost:5005/api/products/${id}`);
+                await axios.delete(`https://apisurprise.dodunsoftsolutions.com/api/products/${id}`);
                 setProducts(products.filter((product) => product._id !== id));
             } catch (err) {
                 alert('Failed to delete product');

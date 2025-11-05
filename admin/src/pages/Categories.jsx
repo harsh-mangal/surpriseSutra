@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { Search, Plus, Edit2, Trash2, X, Check, Eye } from "lucide-react";
 
-const API_BASE = "http://localhost:5005/api";
+const API_BASE = "https://apisurprise.dodunsoftsolutions.com/api";
 
 const CategoryManagement = () => {
   const [categories, setCategories] = useState([]);

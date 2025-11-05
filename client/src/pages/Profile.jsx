@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, MapPin, Plus, Edit, Trash2, Check, X, ArrowLeft, Package, Heart, LogOut } from 'lucide-react';
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:5005/api/user';
+const API_BASE = 'https://apisurprise.dodunsoftsolutions.com/api/user';
 
 const ProfilePage = () => {
   const navigate = useNavigate();

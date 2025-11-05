@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Check, CreditCard, Package, Truck, Wallet, Plus, MapPin, LogIn } from 'lucide-react';
 import axios from 'axios';
 
-const USER_API = 'http://localhost:5005/api/user';
-const ORDER_API = 'http://localhost:5005/api/order';
+const USER_API = 'https://apisurprise.dodunsoftsolutions.com/api/user';
+const ORDER_API = 'https://apisurprise.dodunsoftsolutions.com/api/order';
 
 const getCart = () => JSON.parse(localStorage.getItem("surprise_sutra_cart") || '[]');
 const saveCart = (items) => {
