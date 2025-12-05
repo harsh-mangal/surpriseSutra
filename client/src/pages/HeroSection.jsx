@@ -22,13 +22,16 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import BirthdayCake from '../assest/birthday-cake.webp';
+import HeroImage from '../assest/HeroSection.webp';
+import OurStory from '../assest/OurStory.webp';
 
 const HeroSection = () => {
   const images = [
     "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&h=600&fit=crop",
-    "https://ik.imagekit.io/sqpcbo0c0/Surprise%20Sutra/birthday-cake-teddy-bear-vintage-suitecase-balloons-isolated-white-background.jpg?updatedAt=1760440645977",
-    "https://ik.imagekit.io/sqpcbo0c0/Surprise%20Sutra/new-years-eve-party-decoration.jpg?updatedAt=1760440646512",
-    "https://ik.imagekit.io/sqpcbo0c0/Surprise%20Sutra/photorealistic-wedding-venue-with-intricate-decor-ornaments.jpg?updatedAt=1760440650784",
+     BirthdayCake,
+     HeroImage,
+     OurStory 
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

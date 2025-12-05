@@ -1,5 +1,6 @@
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
+import Logo from '../assest/surprisesutralogopng.webp';
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -58,7 +59,7 @@ const Footer = () => {
         <div>
           <div className="flex items-center space-x-3 mb-4">
             <img
-              src="https://ik.imagekit.io/tdlebsr5e/surprisesutralogopng?updatedAt=1762244410560"
+              src={Logo}
               alt="Surprise Sutra Logo"
               className="w-40 h-auto object-contain"
             />

@@ -10,6 +10,7 @@ import {
   Target,
   Shield,
 } from "lucide-react";
+import OurStory from '../assest/OurStory.webp';
 
 const AboutUs = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -21,7 +22,7 @@ const AboutUs = () => {
   return (
     <>
       {/* ===== Hero / Top Banner ===== */}
-      <div className="relative text-white py-16 md:py-24 overflow-hidden bg-black">
+      <div className="relative text-white py-16 md:py-24 overflow-hidden bg-white">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
@@ -163,7 +164,7 @@ const AboutUs = () => {
                 {/* Image */}
                 <div className="relative bg-gradient-to-br from-red-700 to-red-800 rounded-3xl p-3 md:p-4 shadow-2xl transform hover:scale-[1.02] transition-all duration-500 border border-red-500/30">
                   <img
-                    src="https://ik.imagekit.io/sqpcbo0c0/Surprise%20Sutra/photorealistic-wedding-venue-with-intricate-decor-ornaments.jpg?updatedAt=1760440650784"
+                    src={OurStory}
                     alt="Our Story"
                     className="rounded-2xl w-full h-64 md:h-96 lg:h-[500px] object-cover"
                   />

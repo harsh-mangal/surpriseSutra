@@ -9,6 +9,7 @@ import {
   User,
   ChevronDown,
 } from "lucide-react";
+import Logo from '../assest/surprisesutralogopng.webp';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -184,7 +185,7 @@ const Navbar = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-rose-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <img
-              src="https://ik.imagekit.io/tdlebsr5e/surprisesutralogopng?updatedAt=1762244410560"
+              src={Logo}
               alt="Surprise Sutra Logo"
               className="relative h-20 lg:h-24 w-auto p-1 transition-transform duration-300 group-hover:scale-105"
             />

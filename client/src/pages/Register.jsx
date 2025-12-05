@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, User, Eye, EyeOff, Sparkles, AlertCircle, XCircle, CheckCircle } from "lucide-react";
 import axios from "axios";
+import YellowLogo from '../assest/YellowLogo.webp';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ const RegisterPage = () => {
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-rose-400 rounded-full blur-xl opacity-50 group-hover:opacity-80 transition-opacity"></div>
                 <img
-                  src="https://ik.imagekit.io/sqpcbo0c0/Surprise%20Sutra/ChatGPT_Image_Oct_14__2025__05_14_06_PM-removebg-preview.png?updatedAt=1760442286996"
+                  src={YellowLogo}
                   alt="Surprise Sutra"
                   className="relative h-20 w-auto"
                 />
