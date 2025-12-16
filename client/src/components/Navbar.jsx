@@ -9,7 +9,7 @@ import {
   User,
   ChevronDown,
 } from "lucide-react";
-import Logo from '../assest/surprisesutralogopng.webp';
+import Logo from "../assest/surprisesutralogopng.webp";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -138,7 +138,7 @@ const Navbar = () => {
         },
       ],
     },
-    { name: "Gifts", path: "/gifts" },
+    { name: "Services", path: "/services" },
 
     { name: "Contact", path: "/contact", isButton: true },
   ];
@@ -184,10 +184,11 @@ const Navbar = () => {
             onClick={() => navigate("/")}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-rose-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
             <img
               src={Logo}
               alt="Surprise Sutra Logo"
-              className="relative h-20 lg:h-24 w-auto p-1 transition-transform duration-300 group-hover:scale-105"
+              className="relative h-14 lg:h-16 w-auto p-1 transition-transform duration-300 group-hover:scale-105"
             />
           </div>
 
@@ -220,27 +221,33 @@ const Navbar = () => {
                     </div>
 
                     {isPartySuppliesOpen && (
-                      <div className="absolute top-full left-0 mt-0 w-52 bg-white rounded-lg shadow-xl border border-amber-500/20 overflow-hidden">
+                      <div className="absolute top-full left-0 mt-0 w-52 bg-white rounded-lg shadow-xl border border-amber-500/20 overflow-visible">
                         {link.subLinks.map((sub) => (
                           <div key={sub.path}>
                             {sub.subLinks ? (
                               <>
-                                <button
-                                  onClick={() => setIsThemedOpen(!isThemedOpen)}
-                                  className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${
-                                    location.pathname === sub.path
-                                      ? "bg-amber-100 text-amber-600"
-                                      : ""
-                                  }`}
+                                <div
+                                  onMouseEnter={() => setIsThemedOpen(true)}
+                                  onMouseLeave={() => setIsThemedOpen(false)}
                                 >
-                                  <span>{sub.name}</span>
-                                  <ChevronDown
-                                    size={16}
-                                    className={`transition-transform duration-300 ${
-                                      isThemedOpen ? "rotate-180" : ""
+                                  <div
+                                    className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${
+                                      location.pathname.startsWith(
+                                        "/party-supplies/themed"
+                                      )
+                                        ? "bg-amber-100 text-amber-600"
+                                        : ""
                                     }`}
-                                  />
-                                </button>
+                                  >
+                                    <span>{sub.name}</span>
+                                    <ChevronDown
+                                      size={16}
+                                      className={`transition-transform duration-300 ${
+                                        isThemedOpen ? "rotate-180" : ""
+                                      }`}
+                                    />
+                                  </div>
+                                </div>
 
                                 {isThemedOpen && (
                                   <div className="pl-4 bg-gray-50">
@@ -490,17 +497,21 @@ const Navbar = () => {
                         {link.subLinks.map((sub) => (
                           <div key={sub.path}>
                             {sub.subLinks ? (
-                              <>
-                                <button
-                                  onClick={() => setIsThemedOpen(!isThemedOpen)}
-                                  className={`w-full text-left flex items-center justify-between px-4 py-2 text-sm font-medium text-gray-800 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${
-                                    location.pathname === sub.path
+                              <div
+                                key={sub.path}
+                                className="relative"
+                                onMouseEnter={() => setIsThemedOpen(true)}
+                                onMouseLeave={() => setIsThemedOpen(false)}
+                              >
+                                {/* Parent row */}
+                                <div
+                                  className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium cursor-default text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${
+                                    location.pathname.startsWith(
+                                      "/party-supplies/themed"
+                                    )
                                       ? "bg-amber-100 text-amber-600"
                                       : ""
                                   }`}
-                                  style={{
-                                    animationDelay: `${(idx + 1) * 50}ms`,
-                                  }}
                                 >
                                   <span>{sub.name}</span>
                                   <ChevronDown
@@ -509,15 +520,16 @@ const Navbar = () => {
                                       isThemedOpen ? "rotate-180" : ""
                                     }`}
                                   />
-                                </button>
+                                </div>
 
+                                {/* Right side submenu */}
                                 {isThemedOpen && (
-                                  <div className="pl-4 space-y-1 mt-1">
+                                  <div className="absolute left-full top-0 ml-1 w-56 bg-white rounded-lg shadow-xl border border-amber-500/20 overflow-hidden">
                                     {sub.subLinks.map((themed) => (
                                       <Link
                                         key={themed.path}
                                         to={themed.path}
-                                        className={`block px-3 py-2 text-xs font-medium text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${
+                                        className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${
                                           location.pathname === themed.path
                                             ? "bg-amber-100 text-amber-600"
                                             : ""
@@ -529,19 +541,17 @@ const Navbar = () => {
                                     ))}
                                   </div>
                                 )}
-                              </>
+                              </div>
                             ) : (
                               <Link
+                                key={sub.path}
                                 to={sub.path}
-                                className={`block px-4 py-2 text-sm font-medium text-gray-800 hover:text-amber-600 hover:bg-amber-50 transition-colors duration-200 rounded-lg ${
+                                className={`block px-4 py-3 text-sm font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-200 ${
                                   location.pathname === sub.path
                                     ? "bg-amber-100 text-amber-600"
                                     : ""
                                 }`}
                                 onClick={handleLinkClick}
-                                style={{
-                                  animationDelay: `${(idx + 1) * 50}ms`,
-                                }}
                               >
                                 {sub.name}
                               </Link>

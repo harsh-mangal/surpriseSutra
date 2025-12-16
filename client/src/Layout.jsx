@@ -23,6 +23,7 @@ import TermsConditions from "./pages/TermsConditions";
 import RefundPolicy from "./pages/RefundPolicy";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import Faqs from "./pages/Faqs";
+import Services from "./pages/Services";
 
 function Layout() {
   return (
@@ -43,6 +44,7 @@ function Layout() {
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+               <Route path="/services" element={<Services />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/profile" element={<ProfilePage />} />

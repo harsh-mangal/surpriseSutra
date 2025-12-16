@@ -7,6 +7,7 @@ const ShippingPolicy = () => {
 
   return (
     <div className="bg-black text-white min-h-screen">
+      {/* HERO */}
       <div className="relative py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0">
           <img
@@ -23,40 +24,65 @@ const ShippingPolicy = () => {
               isVisible ? "opacity-100" : "opacity-0 translate-y-8"
             }`}
           >
-            Shipping Policy
+            Shipping & Service Policy
           </h1>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-            We ensure safe and timely delivery of all decorative materials.
+            Clear delivery and service coverage for our products and decoration services
           </p>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-12 space-y-8 max-w-4xl">
+      {/* CONTENT */}
+      <div className="container mx-auto px-6 py-12 space-y-10 max-w-4xl">
+        {/* PRODUCTS */}
         <section>
           <h2 className="text-2xl font-bold text-yellow-400 mb-3">
-            Delivery Areas
+            Product Delivery (PAN India)
           </h2>
           <p className="text-gray-300">
-            We currently serve across Delhi, Noida, Gurgaon, Ghaziabad, and
-            Faridabad regions.
+            All physical products available on our website are eligible for
+            <span className="text-white font-semibold"> PAN India delivery</span>.
+            We ship to all major cities and towns across India through trusted
+            logistics partners to ensure safe and timely delivery.
           </p>
         </section>
+
+        {/* SERVICES */}
+        <section>
+          <h2 className="text-2xl font-bold text-yellow-400 mb-3">
+            Decoration Services (Limited Locations)
+          </h2>
+          <p className="text-gray-300">
+            Our decoration and event setup services are currently available only
+            in the following regions:
+          </p>
+          <p className="text-gray-200 mt-2 font-medium">
+            Delhi • Noida • Gurgaon • Ghaziabad • Faridabad
+          </p>
+        </section>
+
+        {/* DELIVERY TIME */}
         <section>
           <h2 className="text-2xl font-bold text-yellow-400 mb-3">
             Delivery Time
           </h2>
           <p className="text-gray-300">
-            Orders are processed within 24 hours and delivered within 2–5
-            business days based on location and customization.
+            Orders are typically processed within 24 hours. Product delivery
+            timelines may range between <span className="text-white font-semibold">2–5 business days</span>,
+            depending on location, product availability, and customization requirements.
           </p>
         </section>
+
+        {/* DELAYS */}
         <section>
           <h2 className="text-2xl font-bold text-yellow-400 mb-3">
-            Delays
+            Delays & Exceptions
           </h2>
           <p className="text-gray-300">
-            Unexpected weather or logistical issues may cause minor delays. Our
-            team will keep you informed in such cases.
+            While we strive for timely fulfillment, unforeseen circumstances such
+            as weather conditions, regional restrictions, or logistical challenges
+            may cause minor delays. In such cases, our support team will keep you
+            informed proactively.
           </p>
         </section>
       </div>

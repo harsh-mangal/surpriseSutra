@@ -1,153 +1,131 @@
 import { useEffect, useState } from "react";
-import {
-  Menu,
-  X,
-  Phone,
-  Mail,
-  MapPin,
-  Facebook,
-  Instagram,
-  Twitter,
-  Youtube,
-  Star,
-  Quote,
-  ChevronLeft,
-  ChevronRight,
-  Sparkles,
-  Heart,
-  Gift,
-  Baby,
-  PartyPopper,
-  Calendar,
-  ArrowRight,
-} from "lucide-react";
+import { Star, Sparkles, Heart, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import BirthdayCake from '../assest/birthday-cake.webp';
-import HeroImage from '../assest/HeroSection.webp';
-import OurStory from '../assest/OurStory.webp';
+
+import BirthdayCake from "../assest/birthday-cake.webp";
+import HeroImage from "../assest/HeroSection.webp";
+import OurStory from "../assest/OurStory.webp";
 
 const HeroSection = () => {
   const images = [
     "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&h=600&fit=crop",
-     BirthdayCake,
-     HeroImage,
-     OurStory 
+    BirthdayCake,
+    HeroImage,
+    OurStory,
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3500);
+      setCurrentIndex((p) => (p + 1) % images.length);
+    }, 3200); // slightly faster, feels snappier
     return () => clearInterval(interval);
   }, [images.length]);
 
   return (
-    <section
-      id="home"
-      className="relative bg-white py-12 md:py-24 overflow-hidden"
-    >
-      {/* Luxury gradient overlays */}
-      {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,215,0,0.1),transparent_50%)]"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(220,38,38,0.08),transparent_50%)]"></div> */}
-
-      {/* Subtle animated sparkles */}
-
-      <div className="absolute bottom-32 right-20 animate-pulse delay-1000">
-        <Sparkles className="text-rose-400 opacity-40" size={20} />
+    <section id="home" className="relative bg-white py-10 md:py-16 overflow-hidden">
+      {/* subtle sparkle */}
+      <div className="absolute bottom-24 right-16 animate-pulse">
+        <Sparkles className="text-rose-400 opacity-30" size={18} />
       </div>
 
-      <div className="relative mx-auto  px-6 sm:px-6 lg:px-16">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div className="space-y-2">
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-red-700 via-rose-600 to-amber-600 bg-clip-text text-transparent leading-tight tracking-tight">
-              Transform Your{" "}
+      <div className="relative mx-auto px-5 sm:px-6 lg:px-14">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* LEFT */}
+          <div className="space-y-4">
+            <h1 className="text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight">
+              <span className="bg-gradient-to-r from-red-700 via-rose-600 to-amber-600 bg-clip-text text-transparent">
+                Transform Your{" "}
+              </span>
               <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent italic">
                 Special Moments
               </span>{" "}
-              Into Timeless Memories
+              <span className="bg-gradient-to-r from-red-700 via-rose-600 to-amber-600 bg-clip-text text-transparent">
+                Into Timeless Memories
+              </span>
             </h1>
 
-            <p className="text-xl text-gray-600 leading-relaxed font-light max-w-xl">
-              Exquisite decoration services for birthdays, anniversaries, baby
-              showers, and every celebration that deserves perfection. We craft
-              bespoke experiences tailored to your vision.
+            <p className="text-base md:text-lg text-gray-600 leading-relaxed font-light max-w-xl">
+              Premium decoration services for birthdays, anniversaries, baby showers, and more.
+              We craft bespoke experiences tailored to your vision.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-6">
-              <button onClick={()=>navigate('/contact')} className="group bg-gradient-to-r from-red-600 to-rose-600 text-white px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl transition-all duration-300 shadow-xl flex items-center justify-center space-x-2 hover:scale-105">
-                <span>Book Your Experience</span>
-                <ArrowRight
-                  size={20}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
+            {/* CTA */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <button
+                onClick={() => navigate("/diy-kits")}
+                className="group bg-gradient-to-r from-red-600 to-rose-600 text-white px-7 py-3 rounded-full font-semibold text-sm md:text-base shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 hover:scale-[1.03]"
+              >
+                <span>Shop Products</span>
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="bg-white text-red-700 px-10 py-4 rounded-full font-semibold text-lg hover:bg-gradient-to-r hover:from-amber-50 hover:to-yellow-50 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-amber-200 hover:scale-105">
-                View Gallery
+
+              <button
+                onClick={() => navigate("/services")}
+                className="group bg-white text-red-700 px-7 py-3 rounded-full font-semibold text-sm md:text-base shadow-md hover:shadow-lg transition-all duration-300 border border-amber-200 hover:scale-[1.03] flex items-center justify-center gap-2"
+              >
+                <span>Explore Services</span>
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
 
-            <div className="grid grid-cols-3 gap-6 pt-8">
+            {/* STATS */}
+            <div className="grid grid-cols-3 gap-4 pt-5">
               <div className="text-center">
-                <p className="text-4xl font-bold bg-gradient-to-r from-red-600 to-rose-500 bg-clip-text text-transparent">
-                  500+
+                <p className="text-3xl font-bold bg-gradient-to-r from-red-600 to-rose-500 bg-clip-text text-transparent">
+                  2500+
                 </p>
-                <p className="text-gray-500 text-sm font-medium mt-1">
-                  Luxury Events
-                </p>
+                <p className="text-gray-500 text-xs font-medium mt-1">Events</p>
               </div>
+
               <div className="text-center border-x border-amber-200">
-                <p className="text-4xl font-bold bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+                <p className="text-3xl font-bold bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
                   50+
                 </p>
-                <p className="text-gray-500 text-sm font-medium mt-1">
-                  Bespoke Themes
-                </p>
+                <p className="text-gray-500 text-xs font-medium mt-1">Themes</p>
               </div>
+
               <div className="text-center">
-                <div className="flex items-center justify-center space-x-1">
-                  <p className="text-4xl font-bold bg-gradient-to-r from-red-600 to-amber-500 bg-clip-text text-transparent">
+                <div className="flex items-center justify-center gap-1">
+                  <p className="text-3xl font-bold bg-gradient-to-r from-red-600 to-amber-500 bg-clip-text text-transparent">
                     4.9
                   </p>
-                  <Star className="text-amber-400 fill-amber-400" size={20} />
+                  <Star className="text-amber-400 fill-amber-400" size={18} />
                 </div>
-                <p className="text-gray-500 text-sm font-medium mt-1">
-                  Client Rating
-                </p>
+                <p className="text-gray-500 text-xs font-medium mt-1">Rating</p>
               </div>
             </div>
           </div>
 
+          {/* RIGHT */}
           <div className="relative">
-            {/* Main image container with luxury styling */}
-            <div className="relative bg-gradient-to-br from-red-600 via-rose-600 to-amber-600 rounded-3xl p-1 shadow-2xl transform hover:scale-105 transition-all duration-700">
-              <div className="bg-white rounded-3xl p-3">
+            {/* image card (smaller + sharper) */}
+            <div className="relative bg-gradient-to-br from-red-600 via-rose-600 to-amber-600 rounded-2xl p-[2px] shadow-xl hover:shadow-2xl transition-all duration-500">
+              <div className="bg-white rounded-2xl p-2">
                 <img
                   src={images[currentIndex]}
-                  alt="Luxury Event Decoration"
-                  className="rounded-2xl w-full h-96 object-cover transition-all duration-700 ease-in-out shadow-lg"
+                  alt="Event Decoration"
+                  className="rounded-xl w-full h-80 md:h-88 object-cover shadow-md transition-all duration-700 ease-in-out"
                 />
               </div>
             </div>
 
-            {/* Floating badge with enhanced design */}
-            <div className="absolute -bottom-8 -left-8 bg-gradient-to-br from-amber-400 to-yellow-300 text-red-800 p-6 ml-4 lg:ml-0 rounded-2xl shadow-2xl border-4 border-white backdrop-blur-sm hover:scale-110 transition-transform duration-300">
-              <div className="flex items-center space-x-2">
-                <Sparkles className="text-red-700" size={24} />
+            {/* badge smaller */}
+            <div className="absolute -bottom-6 -left-6 bg-gradient-to-br from-amber-400 to-yellow-300 text-red-800 p-4 rounded-xl shadow-xl border-2 border-white hover:scale-105 transition-transform duration-300">
+              <div className="flex items-center gap-2">
+                <Sparkles className="text-red-700" size={18} />
                 <div>
-                  <p className="text-xl font-bold">Same Day Service</p>
-                  <p className="font-medium text-sm opacity-90">
-                    Available Now
-                  </p>
+                  <p className="text-sm font-bold leading-tight">Same Day Service</p>
+                  <p className="text-[12px] font-medium opacity-90">Available Now</p>
                 </div>
               </div>
             </div>
 
-            {/* Decorative elements */}
-            <div className="absolute -top-4 -right-4 bg-gradient-to-br from-rose-400 to-pink-400 rounded-full p-4 shadow-xl border-4 border-white animate-bounce">
-              <Heart className="text-white fill-white" size={24} />
+            {/* heart smaller */}
+            <div className="absolute -top-3 -right-3 bg-gradient-to-br from-rose-400 to-pink-400 rounded-full p-3 shadow-lg border-2 border-white">
+              <Heart className="text-white fill-white" size={18} />
             </div>
           </div>
         </div>

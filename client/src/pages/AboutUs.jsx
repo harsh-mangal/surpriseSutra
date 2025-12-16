@@ -23,9 +23,7 @@ const AboutSection = () => {
             />
 
             {/* Sparkles icon */}
-            <div className={`absolute -top-6 -right-6 p-6 rounded-2xl shadow-xl transition-all duration-700 ${hovered ? "animate-pulse bg-yellow-400" : "bg-red-600"}`}>
-              <Sparkles size={40} className={hovered ? "text-white animate-spin" : "text-yellow-300"} />
-            </div>
+          
           </div>
 
           {/* Text content with address */}
@@ -43,15 +41,12 @@ const AboutSection = () => {
             {/* Address added here */}
         
 
-            <div className="grid grid-cols-2 gap-6 pt-4">
-              <div className="bg-yellow-50 p-6 rounded-xl border-2 border-yellow-400 hover:scale-105 transition-transform duration-300 shadow-md">
+            <div className="grid grid-cols- gap-6 pt-4">
+              <div className="bg-yellow-10 p-6 rounded-xl border-2 border-yellow-400 hover:scale-105 transition-transform duration-300 shadow-md">
                 <p className="text-3xl font-bold text-red-700 mb-2">100%</p>
                 <p className="text-gray-700 font-semibold">Customer Satisfaction</p>
               </div>
-              <div className="bg-red-50 p-6 rounded-xl border-2 border-red-400 hover:scale-105 transition-transform duration-300 shadow-md">
-                <p className="text-3xl font-bold text-red-700 mb-2">24/7</p>
-                <p className="text-gray-700 font-semibold">Support Available</p>
-              </div>
+             
             </div>
           </div>
         </div>

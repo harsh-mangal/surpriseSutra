@@ -1,6 +1,7 @@
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Facebook, Instagram, Youtube, Phone, Mail } from "lucide-react";
+
 import { Link } from "react-router-dom";
-import Logo from '../assest/surprisesutralogopng.webp';
+import Logo from "../assest/surprisesutralogopng.webp";
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -48,7 +49,7 @@ const Footer = () => {
       href: "https://www.instagram.com/surprisesutra?igsh=ZTljOGh1M2ZiYXdh",
       icon: <Instagram size={20} />,
     },
-    { href: "https://www.twitter.com", icon: <Twitter size={20} /> },
+
     { href: "https://www.youtube.com", icon: <Youtube size={20} /> },
   ];
 
@@ -61,7 +62,7 @@ const Footer = () => {
             <img
               src={Logo}
               alt="Surprise Sutra Logo"
-              className="w-40 h-auto object-contain"
+              className="relative h-14 lg:h-16 w-auto p-1 transition-transform duration-300 group-hover:scale-105"
             />
           </div>
           <p className="text-gray-700 leading-relaxed mb-6">
@@ -161,26 +162,31 @@ const Footer = () => {
         </div>
 
         {/* Contact / Info */}
+        {/* Contact / Info */}
         <div>
           <h3 className="text-xl font-bold text-amber-600 mb-4">
             Get In Touch
           </h3>
 
-          <p className="text-gray-700 mb-3">
-            📞{" "}
-            <a href="tel:+919876543210" className="hover:text-amber-600">
+          <div className="flex items-center gap-3 mb-3 text-gray-700">
+            <Phone size={18} className="text-amber-600" />
+            <a
+              href="tel:+919876543210"
+              className="hover:text-amber-600 transition"
+            >
               +91 98765 43210
             </a>
-          </p>
-          <p className="text-gray-700">
-            📧{" "}
+          </div>
+
+          <div className="flex items-center gap-3 text-gray-700">
+            <Mail size={18} className="text-amber-600" />
             <a
               href="mailto:info@surprisesutra.com"
-              className="hover:text-amber-600"
+              className="hover:text-amber-600 transition"
             >
               info@surprisesutra.com
             </a>
-          </p>
+          </div>
 
           <div className="mt-6">
             <Link

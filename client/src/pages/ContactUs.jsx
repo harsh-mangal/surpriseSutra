@@ -45,12 +45,7 @@ export default function ContactUs() {
       url: "https://facebook.com/surprisesutra",
       label: "Facebook",
     },
-    {
-      id: 3,
-      icon: Twitter,
-      url: "https://twitter.com/surprisesutra",
-      label: "Twitter",
-    },
+  
   ];
 
   return (
@@ -129,12 +124,12 @@ export default function ContactUs() {
                 </h3>
               </div>
               <p className="text-gray-700 text-sm sm:text-base">
-                Mon – Sat <br />
+                Available All Days <br />
                 <span className="text-red-600 font-semibold">
-                  9:00 AM – 6:00 PM
+                  11:00 AM – 7:00 PM
                 </span>
               </p>
-              <p className="text-gray-500 mt-2 text-sm">Sunday Closed</p>
+              <p className="text-gray-500 mt-2 text-sm"></p>
             </div>
 
             {/* Socials */}
